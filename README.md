@@ -50,6 +50,7 @@ python ch09/benchmark.py
 | `ch06/` | 6부 | 하이브리드, 가드레일 |
 | `ch07/` | 7부 | RAG 재랭킹, Agent 위험 평가 |
 | `ch09/` | 9부 | 4파전 벤치마크 |
+| `ch11/` | 11부 | 기권 신호, 신뢰도 통계, 표본 점검, criteria 개선 (전자책 전용 장) |
 | `projects/` | 8부 | 완성 프로젝트 4종 |
 
 ## 장별 대응표
@@ -73,6 +74,10 @@ python ch09/benchmark.py
 | 07-3 | `ch07/agent_risk.py` |
 | 09-1 | `ch09/benchmark.py` |
 | 09-4 | `ch09/hybrid_bench.py` |
+| 11-2 | `ch11/01_abstain_signals.py` |
+| 11-3 | `ch11/02_reliability_stats.py` |
+| 11-4 | `ch11/03_audit_sampling.py` |
+| 11-5 | `ch11/04_improve_criteria.py` |
 | 08-1 | `projects/p1_triage/` |
 | 08-2 | `projects/p2_router/` |
 | 08-3 | `projects/p3_rag/` |
