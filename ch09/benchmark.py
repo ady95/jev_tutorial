@@ -5,13 +5,21 @@
     python benchmark.py --holdout-runs 1
     python benchmark.py --limit 5         셋마다 앞 5건 (배선 확인용)
 
+예제 저장소에서는 저장소 루트에서 python ch09/benchmark.py 로 실행한다.
+
 임계값 정책: 개발셋 1회에서 "무오류를 유지하는 가장 낮은 값"을 고르고, 그 값을
 검증셋의 모든 회차에 그대로 쓴다. 검증셋 회차마다 다시 고르지 않는다.
+무오류인 후보가 없으면 게이트를 끈다(전부 LLM).
+
+하이브리드는 따로 부르지 않는다. 같은 회차의 Jev 답·프런티어 답과 건별 지연을
+조합한 오프라인 값이다. 실제 조합 시스템의 종단 지연을 잰 것이 아니다.
 """
 import argparse
 import json
+import os
 import re
 import statistics
+import sys
 import time
 
 from dotenv import load_dotenv
@@ -21,7 +29,8 @@ from typesafe_sdk import Choice, TypeSafeClient
 try:                                    # 부록 D 를 그대로 저장한 경우
     from dataset_dev import DEV
     from dataset_holdout import HOLDOUT
-except ImportError:                     # 예제 저장소
+except ImportError:                     # 예제 저장소 — 저장소 루트를 import 경로에 넣는다
+    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     from dataset.inquiries import INQUIRIES as DEV
     from dataset.holdout import HOLDOUT
 
@@ -112,21 +121,27 @@ def llm_run(texts, oa, model):
     return preds, lat, fmt_err, out_tok, reason_tok, models
 
 
+def passes(conf, threshold):
+    """게이트 통과 여부. threshold 가 None 이면 게이트가 꺼져 있다."""
+    return threshold is not None and conf >= threshold
+
+
 def hybrid(jev_preds, jev_confs, llm_preds, threshold):
     """confidence가 임계값 이상이면 Jev 답을 쓰고, 아니면 LLM에 넘긴다."""
-    return [j if c >= threshold else l
+    return [j if passes(c, threshold) else l
             for j, c, l in zip(jev_preds, jev_confs, llm_preds)]
 
 
 def pick_threshold(preds, confs, truths, candidates=(0.5, 0.7, 0.8, 0.9, 0.95)):
-    """개발셋에서만 부른다 — 게이트 구간에서 무오류를 유지하는 가장 낮은 값."""
-    best = candidates[-1]
+    """개발셋에서만 부른다 — 게이트 구간에서 무오류를 유지하는 가장 낮은 값.
+
+    그런 후보가 없으면 None 을 돌려준다. 마지막 후보를 대신 쓰면 오답이 게이트를 통과한다.
+    """
     for th in candidates:
         gate = [(p, t) for p, c, t in zip(preds, confs, truths) if c >= th]
         if gate and all(p == t for p, t in gate):
-            best = th
-            break
-    return best
+            return th
+    return None
 
 
 def brier(probs, truths):
@@ -156,7 +171,8 @@ def row(name, preds, truths, lat, fmt_err=0, out_tok=None, reason_tok=None):
     return d
 
 
-def bench(dataset, label, oa, client, threshold=None):
+def bench(dataset, label, oa, client, threshold=None, pick=False):
+    """pick=True 면 이 셋에서 임계값을 고른다(개발셋). 아니면 받은 값을 그대로 쓴다."""
     texts = [x for x, _, _ in dataset]
     truths = [y for _, y, _ in dataset]
     out = {"label": label, "rows": []}
@@ -171,14 +187,14 @@ def bench(dataset, label, oa, client, threshold=None):
     out["rows"].append(row(f"프런티어 LLM ({FRONTIER})", fp, truths, fl, fe, fo, fr))
     out["models"] = sorted(set(jm + sm + fm))              # 응답에 찍힌 모델 이름
 
-    if threshold is None:
+    if pick:
         threshold = pick_threshold(jp, jc, truths)
+    # 하이브리드는 위의 Jev·프런티어 결과를 조합한다. 미통과 건의 지연은 두 측정값의 합
     hp = hybrid(jp, jc, fp, threshold)
-    hl = [j if c >= threshold else j + f
-          for j, c, f in zip(jl, jc, fl)]          # 게이트 미통과 건은 두 번 부른다
+    hl = [j if passes(c, threshold) else j + f for j, c, f in zip(jl, jc, fl)]
     out["rows"].append(row("Jev + 프런티어", hp, truths, hl))
 
-    gate = [p == t for p, c, t in zip(jp, jc, truths) if c >= threshold]
+    gate = [p == t for p, c, t in zip(jp, jc, truths) if passes(c, threshold)]
     out.update(threshold=threshold, gated=len(gate),
                gate_reliability=sum(gate) / len(gate) if gate else None,
                llm_call_pct=1 - len(gate) / len(texts),
@@ -191,8 +207,11 @@ def bench(dataset, label, oa, client, threshold=None):
 
 
 def show(r):
-    print(f"\n[{r['label']}]  임계값 {r['threshold']}  게이트 통과 {r['gated']}건  "
-          f"게이트 신뢰도 {r['gate_reliability']}  LLM 호출 {r['llm_call_pct']:.1%}  "
+    rel = r["gate_reliability"]
+    rel = "평가 불가" if rel is None else f"{rel:.3f}"      # 빈 게이트는 100% 가 아니다
+    th = "없음(게이트 끔)" if r["threshold"] is None else r["threshold"]
+    print(f"\n[{r['label']}]  임계값 {th}  게이트 통과 {r['gated']}건  "
+          f"게이트 신뢰도 {rel}  LLM 호출 {r['llm_call_pct']:.1%}  "
           f"Jev Brier {r['jev_brier']:.4f}  ECE {r['jev_ece']:.4f}")
     print(f"{'방식':28}{'정확도':>7}{'평균':>8}{'P50':>8}{'P95':>8}{'P99':>8}"
           f"{'출력tok':>8}{'추론tok':>8}{'형식오류':>6}")
@@ -213,10 +232,13 @@ if __name__ == "__main__":
 
     oa = OpenAI()
     with TypeSafeClient() as client:
-        d = bench(dev, "개발셋", oa, client)
+        d = bench(dev, "개발셋", oa, client, pick=True)
         show(d)
         th = d["threshold"]
-        print(f"\n개발셋에서 고른 임계값 {th} 를 검증셋 {a.holdout_runs}회에 그대로 씁니다")
+        if th is None:
+            print("\n개발셋에서 무오류 임계값을 찾지 못했습니다. 검증셋도 게이트 없이 잽니다")
+        else:
+            print(f"\n개발셋에서 고른 임계값 {th} 를 검증셋 {a.holdout_runs}회에 그대로 씁니다")
         hs = [bench(hold, f"검증셋 {i + 1}회", oa, client, threshold=th)
               for i in range(a.holdout_runs)]
         for h in hs:
