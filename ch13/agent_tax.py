@@ -23,7 +23,7 @@ from langchain_core.tools import tool
 
 from corpus_tax import CORPUS, as_text
 
-MODEL = os.getenv("TAX_AGENT_MODEL", "openai:gpt-5.6-luna")
+MODEL = os.getenv("TAX_AGENT_MODEL", "openai:gpt-6-luna")
 TOP_K = 3
 
 SYSTEM = (

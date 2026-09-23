@@ -22,7 +22,14 @@ pip install langchain langchain-openai langchain-typesafe
 ```
 
 `.env` 에 `TYPESAFE_API_KEY` 와 `OPENAI_API_KEY` 가 모두 필요합니다.
-에이전트 모델은 `TAX_AGENT_MODEL` 로 바꿉니다 (기본값 `openai:gpt-5.6-luna`).
+에이전트 모델은 `TAX_AGENT_MODEL` 로 바꿉니다 (기본값 `openai:gpt-6-luna`).
+
+> **책의 13부 수치는 `gpt-5.6-luna` 로 잰 것입니다.** 기본값은 최신 하위 티어
+> 모델로 두었으므로 그대로 돌리면 책과 다른 숫자가 나올 수 있습니다. 책과 같은
+> 조건으로 맞추려면 `TAX_AGENT_MODEL=openai:gpt-5.6-luna` 를 주세요.
+>
+> 참고로 13-2 에서 두 모델을 같은 프롬프트로 비교했을 때는 응답률·신뢰도·날조가
+> 여섯 칸 모두 같았습니다. 13-4 의 지연·판정 수치는 `gpt-5.6-luna` 기준입니다.
 
 ## 파일
 
@@ -60,8 +67,8 @@ python ch13/evaluate.py
 # 2. 판단 모델로 답변을 검증해 비교
 python ch13/evaluate.py --verify
 
-# 3. 모델을 바꿔도 프롬프트가 유지되는지
-TAX_AGENT_MODEL=openai:gpt-6-luna python ch13/evaluate.py
+# 3. 모델을 바꿔도 프롬프트가 유지되는지 (책은 이 둘을 비교했습니다)
+TAX_AGENT_MODEL=openai:gpt-5.6-luna python ch13/evaluate.py
 
 # 4. 위험한 도구를 막는 harness
 python ch13/harness_eval.py

@@ -38,7 +38,7 @@ from corpus_tax import as_text
 
 clf = TypeSafeClassifier()
 oa = OpenAI()
-LLM = os.getenv("TAX_AGENT_MODEL", "gpt-5.6-luna").replace("openai:", "")
+LLM = os.getenv("TAX_AGENT_MODEL", "gpt-6-luna").replace("openai:", "")
 
 QUESTIONS = {
     "grounded": Noul(
