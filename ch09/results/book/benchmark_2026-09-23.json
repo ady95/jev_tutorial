@@ -1,0 +1,2437 @@
+{
+  "threshold_policy": "dev 1회에서 선택, 검증 전 회차에 고정",
+  "dev": {
+    "label": "개발셋",
+    "rows": [
+      {
+        "name": "규칙 엔진",
+        "acc": 0.6666666666666666,
+        "mean": 0.00234166654990986,
+        "p50": 0.002749999111983925,
+        "p95": 0.0032000025385059416,
+        "p99": 0.00790000194683671,
+        "fmt_err": 0
+      },
+      {
+        "name": "Jev 단독",
+        "acc": 0.8333333333333334,
+        "mean": 287.07191833370115,
+        "p50": 264.50855000075535,
+        "p95": 391.46880000043893,
+        "p99": 963.0438999956823,
+        "fmt_err": 0,
+        "out_tok": 45
+      },
+      {
+        "name": "하위 티어 LLM (gpt-6-luna)",
+        "acc": 0.9166666666666666,
+        "mean": 2604.4786616668716,
+        "p50": 2321.5172500022163,
+        "p95": 3935.5949999953737,
+        "p99": 5267.269299998588,
+        "fmt_err": 0,
+        "out_tok": 32.983333333333334,
+        "reason_tok": 25.983333333333334
+      },
+      {
+        "name": "프런티어 LLM (gpt-6-astra)",
+        "acc": 0.95,
+        "mean": 2857.2156649997246,
+        "p50": 2485.60064999765,
+        "p95": 6111.278299998958,
+        "p99": 6974.5095999969635,
+        "fmt_err": 0,
+        "out_tok": 10.533333333333333,
+        "reason_tok": 5.133333333333334
+      },
+      {
+        "name": "Jev + 프런티어",
+        "acc": 0.95,
+        "mean": 1532.4847500002459,
+        "p50": 304.78279999806546,
+        "p95": 5088.7160999991465,
+        "p99": 7228.60860000219,
+        "fmt_err": 0
+      }
+    ],
+    "models": [
+      "gpt-6-astra",
+      "gpt-6-luna",
+      "jev-1.13.0"
+    ],
+    "threshold": 0.9,
+    "gated": 37,
+    "gate_reliability": 1.0,
+    "llm_call_pct": 0.3833333333333333,
+    "jev_brier": 0.18371,
+    "jev_ece": 0.08283333333333336,
+    "items": [
+      {
+        "truth": "billing",
+        "rule": "billing",
+        "jev": "billing",
+        "conf": 1.0,
+        "small": "billing",
+        "frontier": "billing",
+        "hybrid": "billing"
+      },
+      {
+        "truth": "billing",
+        "rule": "billing",
+        "jev": "billing",
+        "conf": 1.0,
+        "small": "billing",
+        "frontier": "billing",
+        "hybrid": "billing"
+      },
+      {
+        "truth": "billing",
+        "rule": "billing",
+        "jev": "billing",
+        "conf": 1.0,
+        "small": "billing",
+        "frontier": "billing",
+        "hybrid": "billing"
+      },
+      {
+        "truth": "billing",
+        "rule": "billing",
+        "jev": "billing",
+        "conf": 1.0,
+        "small": "billing",
+        "frontier": "billing",
+        "hybrid": "billing"
+      },
+      {
+        "truth": "billing",
+        "rule": "billing",
+        "jev": "billing",
+        "conf": 0.99,
+        "small": "billing",
+        "frontier": "billing",
+        "hybrid": "billing"
+      },
+      {
+        "truth": "billing",
+        "rule": "billing",
+        "jev": "billing",
+        "conf": 1.0,
+        "small": "billing",
+        "frontier": "billing",
+        "hybrid": "billing"
+      },
+      {
+        "truth": "billing",
+        "rule": "billing",
+        "jev": "billing",
+        "conf": 1.0,
+        "small": "billing",
+        "frontier": "billing",
+        "hybrid": "billing"
+      },
+      {
+        "truth": "billing",
+        "rule": "billing",
+        "jev": "technical",
+        "conf": 0.35,
+        "small": "billing",
+        "frontier": "billing",
+        "hybrid": "billing"
+      },
+      {
+        "truth": "billing",
+        "rule": "billing",
+        "jev": "billing",
+        "conf": 0.95,
+        "small": "billing",
+        "frontier": "billing",
+        "hybrid": "billing"
+      },
+      {
+        "truth": "billing",
+        "rule": "other",
+        "jev": "billing",
+        "conf": 0.9,
+        "small": "billing",
+        "frontier": "billing",
+        "hybrid": "billing"
+      },
+      {
+        "truth": "billing",
+        "rule": "billing",
+        "jev": "billing",
+        "conf": 1.0,
+        "small": "billing",
+        "frontier": "billing",
+        "hybrid": "billing"
+      },
+      {
+        "truth": "billing",
+        "rule": "billing",
+        "jev": "billing",
+        "conf": 0.95,
+        "small": "billing",
+        "frontier": "billing",
+        "hybrid": "billing"
+      },
+      {
+        "truth": "technical",
+        "rule": "technical",
+        "jev": "technical",
+        "conf": 1.0,
+        "small": "technical",
+        "frontier": "technical",
+        "hybrid": "technical"
+      },
+      {
+        "truth": "technical",
+        "rule": "other",
+        "jev": "technical",
+        "conf": 1.0,
+        "small": "technical",
+        "frontier": "technical",
+        "hybrid": "technical"
+      },
+      {
+        "truth": "technical",
+        "rule": "technical",
+        "jev": "technical",
+        "conf": 1.0,
+        "small": "technical",
+        "frontier": "technical",
+        "hybrid": "technical"
+      },
+      {
+        "truth": "technical",
+        "rule": "other",
+        "jev": "technical",
+        "conf": 1.0,
+        "small": "technical",
+        "frontier": "technical",
+        "hybrid": "technical"
+      },
+      {
+        "truth": "technical",
+        "rule": "other",
+        "jev": "technical",
+        "conf": 1.0,
+        "small": "technical",
+        "frontier": "technical",
+        "hybrid": "technical"
+      },
+      {
+        "truth": "technical",
+        "rule": "other",
+        "jev": "technical",
+        "conf": 1.0,
+        "small": "technical",
+        "frontier": "technical",
+        "hybrid": "technical"
+      },
+      {
+        "truth": "technical",
+        "rule": "other",
+        "jev": "technical",
+        "conf": 1.0,
+        "small": "technical",
+        "frontier": "technical",
+        "hybrid": "technical"
+      },
+      {
+        "truth": "technical",
+        "rule": "other",
+        "jev": "technical",
+        "conf": 1.0,
+        "small": "technical",
+        "frontier": "technical",
+        "hybrid": "technical"
+      },
+      {
+        "truth": "technical",
+        "rule": "other",
+        "jev": "technical",
+        "conf": 1.0,
+        "small": "technical",
+        "frontier": "technical",
+        "hybrid": "technical"
+      },
+      {
+        "truth": "technical",
+        "rule": "technical",
+        "jev": "technical",
+        "conf": 1.0,
+        "small": "technical",
+        "frontier": "technical",
+        "hybrid": "technical"
+      },
+      {
+        "truth": "technical",
+        "rule": "other",
+        "jev": "technical",
+        "conf": 1.0,
+        "small": "technical",
+        "frontier": "technical",
+        "hybrid": "technical"
+      },
+      {
+        "truth": "technical",
+        "rule": "technical",
+        "jev": "technical",
+        "conf": 1.0,
+        "small": "technical",
+        "frontier": "technical",
+        "hybrid": "technical"
+      },
+      {
+        "truth": "sales",
+        "rule": "sales",
+        "jev": "sales",
+        "conf": 0.99,
+        "small": "sales",
+        "frontier": "sales",
+        "hybrid": "sales"
+      },
+      {
+        "truth": "sales",
+        "rule": "sales",
+        "jev": "sales",
+        "conf": 0.95,
+        "small": "sales",
+        "frontier": "sales",
+        "hybrid": "sales"
+      },
+      {
+        "truth": "sales",
+        "rule": "sales",
+        "jev": "sales",
+        "conf": 0.89,
+        "small": "sales",
+        "frontier": "sales",
+        "hybrid": "sales"
+      },
+      {
+        "truth": "sales",
+        "rule": "sales",
+        "jev": "sales",
+        "conf": 0.98,
+        "small": "sales",
+        "frontier": "sales",
+        "hybrid": "sales"
+      },
+      {
+        "truth": "sales",
+        "rule": "other",
+        "jev": "technical",
+        "conf": 0.45,
+        "small": "sales",
+        "frontier": "sales",
+        "hybrid": "sales"
+      },
+      {
+        "truth": "sales",
+        "rule": "other",
+        "jev": "sales",
+        "conf": 0.88,
+        "small": "sales",
+        "frontier": "sales",
+        "hybrid": "sales"
+      },
+      {
+        "truth": "sales",
+        "rule": "other",
+        "jev": "sales",
+        "conf": 0.36,
+        "small": "sales",
+        "frontier": "sales",
+        "hybrid": "sales"
+      },
+      {
+        "truth": "sales",
+        "rule": "sales",
+        "jev": "sales",
+        "conf": 0.47,
+        "small": "sales",
+        "frontier": "sales",
+        "hybrid": "sales"
+      },
+      {
+        "truth": "sales",
+        "rule": "other",
+        "jev": "other",
+        "conf": 0.36,
+        "small": "other",
+        "frontier": "other",
+        "hybrid": "other"
+      },
+      {
+        "truth": "sales",
+        "rule": "sales",
+        "jev": "sales",
+        "conf": 0.98,
+        "small": "sales",
+        "frontier": "sales",
+        "hybrid": "sales"
+      },
+      {
+        "truth": "other",
+        "rule": "other",
+        "jev": "other",
+        "conf": 0.99,
+        "small": "other",
+        "frontier": "other",
+        "hybrid": "other"
+      },
+      {
+        "truth": "other",
+        "rule": "other",
+        "jev": "other",
+        "conf": 1.0,
+        "small": "other",
+        "frontier": "other",
+        "hybrid": "other"
+      },
+      {
+        "truth": "other",
+        "rule": "other",
+        "jev": "other",
+        "conf": 0.94,
+        "small": "other",
+        "frontier": "other",
+        "hybrid": "other"
+      },
+      {
+        "truth": "other",
+        "rule": "other",
+        "jev": "other",
+        "conf": 0.99,
+        "small": "other",
+        "frontier": "other",
+        "hybrid": "other"
+      },
+      {
+        "truth": "other",
+        "rule": "other",
+        "jev": "sales",
+        "conf": 0.4,
+        "small": "other",
+        "frontier": "other",
+        "hybrid": "other"
+      },
+      {
+        "truth": "other",
+        "rule": "other",
+        "jev": "other",
+        "conf": 0.95,
+        "small": "other",
+        "frontier": "other",
+        "hybrid": "other"
+      },
+      {
+        "truth": "other",
+        "rule": "other",
+        "jev": "technical",
+        "conf": 0.35,
+        "small": "other",
+        "frontier": "other",
+        "hybrid": "other"
+      },
+      {
+        "truth": "other",
+        "rule": "other",
+        "jev": "other",
+        "conf": 0.96,
+        "small": "other",
+        "frontier": "other",
+        "hybrid": "other"
+      },
+      {
+        "truth": "other",
+        "rule": "other",
+        "jev": "sales",
+        "conf": 0.82,
+        "small": "other",
+        "frontier": "other",
+        "hybrid": "other"
+      },
+      {
+        "truth": "other",
+        "rule": "other",
+        "jev": "sales",
+        "conf": 0.49,
+        "small": "other",
+        "frontier": "other",
+        "hybrid": "other"
+      },
+      {
+        "truth": "billing",
+        "rule": "billing",
+        "jev": "billing",
+        "conf": 1.0,
+        "small": "billing",
+        "frontier": "billing",
+        "hybrid": "billing"
+      },
+      {
+        "truth": "sales",
+        "rule": "sales",
+        "jev": "sales",
+        "conf": 0.48,
+        "small": "sales",
+        "frontier": "sales",
+        "hybrid": "sales"
+      },
+      {
+        "truth": "other",
+        "rule": "other",
+        "jev": "other",
+        "conf": 0.83,
+        "small": "other",
+        "frontier": "other",
+        "hybrid": "other"
+      },
+      {
+        "truth": "technical",
+        "rule": "billing",
+        "jev": "technical",
+        "conf": 0.62,
+        "small": "technical",
+        "frontier": "technical",
+        "hybrid": "technical"
+      },
+      {
+        "truth": "billing",
+        "rule": "sales",
+        "jev": "billing",
+        "conf": 0.77,
+        "small": "billing",
+        "frontier": "billing",
+        "hybrid": "billing"
+      },
+      {
+        "truth": "sales",
+        "rule": "sales",
+        "jev": "sales",
+        "conf": 0.83,
+        "small": "sales",
+        "frontier": "sales",
+        "hybrid": "sales"
+      },
+      {
+        "truth": "other",
+        "rule": "other",
+        "jev": "other",
+        "conf": 0.43,
+        "small": "technical",
+        "frontier": "other",
+        "hybrid": "other"
+      },
+      {
+        "truth": "billing",
+        "rule": "other",
+        "jev": "technical",
+        "conf": 0.83,
+        "small": "technical",
+        "frontier": "technical",
+        "hybrid": "technical"
+      },
+      {
+        "truth": "technical",
+        "rule": "other",
+        "jev": "technical",
+        "conf": 0.97,
+        "small": "technical",
+        "frontier": "technical",
+        "hybrid": "technical"
+      },
+      {
+        "truth": "technical",
+        "rule": "billing",
+        "jev": "billing",
+        "conf": 0.57,
+        "small": "billing",
+        "frontier": "technical",
+        "hybrid": "technical"
+      },
+      {
+        "truth": "billing",
+        "rule": "billing",
+        "jev": "billing",
+        "conf": 1.0,
+        "small": "billing",
+        "frontier": "billing",
+        "hybrid": "billing"
+      },
+      {
+        "truth": "technical",
+        "rule": "sales",
+        "jev": "technical",
+        "conf": 0.58,
+        "small": "technical",
+        "frontier": "technical",
+        "hybrid": "technical"
+      },
+      {
+        "truth": "other",
+        "rule": "other",
+        "jev": "other",
+        "conf": 0.99,
+        "small": "other",
+        "frontier": "other",
+        "hybrid": "other"
+      },
+      {
+        "truth": "sales",
+        "rule": "sales",
+        "jev": "billing",
+        "conf": 0.58,
+        "small": "technical",
+        "frontier": "other",
+        "hybrid": "other"
+      },
+      {
+        "truth": "billing",
+        "rule": "technical",
+        "jev": "billing",
+        "conf": 0.49,
+        "small": "billing",
+        "frontier": "billing",
+        "hybrid": "billing"
+      },
+      {
+        "truth": "sales",
+        "rule": "sales",
+        "jev": "sales",
+        "conf": 0.78,
+        "small": "sales",
+        "frontier": "sales",
+        "hybrid": "sales"
+      }
+    ]
+  },
+  "holdout": [
+    {
+      "label": "검증셋 1회",
+      "rows": [
+        {
+          "name": "규칙 엔진",
+          "acc": 0.4666666666666667,
+          "mean": 0.0026249996153637767,
+          "p50": 0.0029000002541579306,
+          "p95": 0.0032000025385059416,
+          "p99": 0.008200004231184721,
+          "fmt_err": 0
+        },
+        {
+          "name": "Jev 단독",
+          "acc": 0.85,
+          "mean": 284.6661566662078,
+          "p50": 282.8683500010811,
+          "p95": 342.84699999989243,
+          "p99": 373.8952999992762,
+          "fmt_err": 0,
+          "out_tok": 45
+        },
+        {
+          "name": "하위 티어 LLM (gpt-6-luna)",
+          "acc": 0.9333333333333333,
+          "mean": 2669.616444999459,
+          "p50": 2219.7366500004136,
+          "p95": 5248.387200001162,
+          "p99": 10420.43179999746,
+          "fmt_err": 0,
+          "out_tok": 35.25,
+          "reason_tok": 28.25
+        },
+        {
+          "name": "프런티어 LLM (gpt-6-astra)",
+          "acc": 0.9333333333333333,
+          "mean": 2652.8205916669926,
+          "p50": 2380.6803000006767,
+          "p95": 5147.24269999715,
+          "p99": 6012.083800000255,
+          "fmt_err": 0,
+          "out_tok": 11.3,
+          "reason_tok": 5.833333333333333
+        },
+        {
+          "name": "Jev + 프런티어",
+          "acc": 0.9166666666666666,
+          "mean": 1590.3393016664875,
+          "p50": 336.1126499985403,
+          "p95": 4496.794600003341,
+          "p99": 6257.3636999950395,
+          "fmt_err": 0
+        }
+      ],
+      "models": [
+        "gpt-6-astra",
+        "gpt-6-luna",
+        "jev-1.13.0"
+      ],
+      "threshold": 0.9,
+      "gated": 33,
+      "gate_reliability": 0.9696969696969697,
+      "llm_call_pct": 0.44999999999999996,
+      "jev_brier": 0.23468333333333333,
+      "jev_ece": 0.0758333333333333,
+      "items": [
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 1.0,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 1.0,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "other",
+          "jev": "billing",
+          "conf": 1.0,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 0.81,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 1.0,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "other",
+          "jev": "billing",
+          "conf": 0.99,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 1.0,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 1.0,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "other",
+          "jev": "billing",
+          "conf": 1.0,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "other",
+          "jev": "billing",
+          "conf": 0.97,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 1.0,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 0.98,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "technical",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 0.98,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 0.4,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "sales",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 0.56,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "sales",
+          "rule": "billing",
+          "jev": "sales",
+          "conf": 0.43,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "sales",
+          "rule": "other",
+          "jev": "sales",
+          "conf": 0.61,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "sales",
+          "rule": "other",
+          "jev": "other",
+          "conf": 0.41,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "sales",
+          "rule": "other",
+          "jev": "sales",
+          "conf": 0.77,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "sales",
+          "rule": "other",
+          "jev": "sales",
+          "conf": 0.71,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "sales",
+          "rule": "other",
+          "jev": "sales",
+          "conf": 0.75,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "sales",
+          "rule": "other",
+          "jev": "other",
+          "conf": 0.37,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "sales",
+          "rule": "other",
+          "jev": "sales",
+          "conf": 0.84,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "sales",
+          "rule": "sales",
+          "jev": "sales",
+          "conf": 0.85,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "other",
+          "conf": 0.79,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "other",
+          "conf": 1.0,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "other",
+          "conf": 0.73,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "other",
+          "conf": 0.99,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 0.95,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "other",
+          "conf": 1.0,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "other",
+          "conf": 0.98,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "sales",
+          "conf": 0.66,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "other",
+          "conf": 0.71,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "other",
+          "conf": 0.47,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 1.0,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "sales",
+          "rule": "sales",
+          "jev": "other",
+          "conf": 0.77,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "other",
+          "conf": 0.75,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "technical",
+          "rule": "billing",
+          "jev": "technical",
+          "conf": 0.64,
+          "small": "billing",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "sales",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 0.77,
+          "small": "sales",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "sales",
+          "jev": "technical",
+          "conf": 0.67,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "billing",
+          "rule": "sales",
+          "jev": "technical",
+          "conf": 0.77,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 0.99,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 0.98,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "billing",
+          "jev": "technical",
+          "conf": 0.5,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "sales",
+          "rule": "other",
+          "jev": "billing",
+          "conf": 0.77,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 0.8,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "other",
+          "conf": 1.0,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 0.99,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "technical",
+          "rule": "technical",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "sales",
+          "rule": "sales",
+          "jev": "sales",
+          "conf": 0.76,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        }
+      ]
+    },
+    {
+      "label": "검증셋 2회",
+      "rows": [
+        {
+          "name": "규칙 엔진",
+          "acc": 0.4666666666666667,
+          "mean": 0.0025916667558097592,
+          "p50": 0.0029000002541579306,
+          "p95": 0.0034999975468963385,
+          "p99": 0.006800000846851617,
+          "fmt_err": 0
+        },
+        {
+          "name": "Jev 단독",
+          "acc": 0.8666666666666667,
+          "mean": 266.8055149999418,
+          "p50": 260.07195000056527,
+          "p95": 314.02130000060424,
+          "p99": 350.0248000054853,
+          "fmt_err": 0,
+          "out_tok": 45
+        },
+        {
+          "name": "하위 티어 LLM (gpt-6-luna)",
+          "acc": 0.9166666666666666,
+          "mean": 2779.4149716664833,
+          "p50": 2444.6314000015263,
+          "p95": 5047.408099999302,
+          "p99": 9508.61850000365,
+          "fmt_err": 0,
+          "out_tok": 34.53333333333333,
+          "reason_tok": 27.533333333333335
+        },
+        {
+          "name": "프런티어 LLM (gpt-6-astra)",
+          "acc": 0.9333333333333333,
+          "mean": 2703.0194816675553,
+          "p50": 2345.0691500038374,
+          "p95": 5130.58810000075,
+          "p99": 5606.340499994985,
+          "fmt_err": 0,
+          "out_tok": 11.483333333333333,
+          "reason_tok": 6.016666666666667
+        },
+        {
+          "name": "Jev + 프런티어",
+          "acc": 0.9166666666666666,
+          "mean": 1600.2307833332452,
+          "p50": 307.3351500024728,
+          "p95": 5378.460100000666,
+          "p99": 5902.578899993387,
+          "fmt_err": 0
+        }
+      ],
+      "models": [
+        "gpt-6-astra",
+        "gpt-6-luna",
+        "jev-1.13.0"
+      ],
+      "threshold": 0.9,
+      "gated": 33,
+      "gate_reliability": 0.9696969696969697,
+      "llm_call_pct": 0.44999999999999996,
+      "jev_brier": 0.23995833333333333,
+      "jev_ece": 0.08033333333333331,
+      "items": [
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 1.0,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 1.0,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "other",
+          "jev": "billing",
+          "conf": 1.0,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 0.82,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 1.0,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "other",
+          "jev": "billing",
+          "conf": 0.99,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 1.0,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 1.0,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "other",
+          "jev": "billing",
+          "conf": 1.0,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "other",
+          "jev": "billing",
+          "conf": 0.97,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 1.0,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 0.98,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "technical",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 0.99,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 0.45,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "sales",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 0.61,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "sales",
+          "rule": "billing",
+          "jev": "sales",
+          "conf": 0.34,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "sales",
+          "rule": "other",
+          "jev": "sales",
+          "conf": 0.59,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "sales",
+          "rule": "other",
+          "jev": "other",
+          "conf": 0.44,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "sales",
+          "rule": "other",
+          "jev": "sales",
+          "conf": 0.84,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "sales",
+          "rule": "other",
+          "jev": "sales",
+          "conf": 0.74,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "sales",
+          "rule": "other",
+          "jev": "sales",
+          "conf": 0.73,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "sales",
+          "rule": "other",
+          "jev": "sales",
+          "conf": 0.38,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "sales",
+          "rule": "other",
+          "jev": "sales",
+          "conf": 0.85,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "sales",
+          "rule": "sales",
+          "jev": "sales",
+          "conf": 0.76,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "other",
+          "conf": 0.76,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "other",
+          "conf": 1.0,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "other",
+          "conf": 0.87,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "other",
+          "conf": 0.99,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 0.97,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "other",
+          "conf": 1.0,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "other",
+          "conf": 0.98,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "sales",
+          "conf": 0.66,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "other",
+          "conf": 0.66,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "other",
+          "conf": 0.47,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 1.0,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "sales",
+          "rule": "sales",
+          "jev": "other",
+          "conf": 0.75,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "other",
+          "conf": 0.75,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "technical",
+          "rule": "billing",
+          "jev": "technical",
+          "conf": 0.7,
+          "small": "billing",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "sales",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 0.83,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "sales",
+          "jev": "technical",
+          "conf": 0.62,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "billing",
+          "rule": "sales",
+          "jev": "technical",
+          "conf": 0.73,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 0.99,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 0.98,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "billing",
+          "jev": "technical",
+          "conf": 0.4,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "sales",
+          "rule": "other",
+          "jev": "billing",
+          "conf": 0.8,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 0.8,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "other",
+          "conf": 1.0,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 1.0,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "technical",
+          "rule": "technical",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "sales",
+          "rule": "sales",
+          "jev": "sales",
+          "conf": 0.77,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        }
+      ]
+    },
+    {
+      "label": "검증셋 3회",
+      "rows": [
+        {
+          "name": "규칙 엔진",
+          "acc": 0.4666666666666667,
+          "mean": 0.002574999598436989,
+          "p50": 0.0029000002541579306,
+          "p95": 0.0033000032999552786,
+          "p99": 0.00670000008540228,
+          "fmt_err": 0
+        },
+        {
+          "name": "Jev 단독",
+          "acc": 0.85,
+          "mean": 281.1730983331169,
+          "p50": 277.2924500022782,
+          "p95": 327.57439999841154,
+          "p99": 337.44540000043344,
+          "fmt_err": 0,
+          "out_tok": 45
+        },
+        {
+          "name": "하위 티어 LLM (gpt-6-luna)",
+          "acc": 0.9166666666666666,
+          "mean": 2480.6320483330637,
+          "p50": 2217.539149998629,
+          "p95": 4452.061899995897,
+          "p99": 8022.867599996971,
+          "fmt_err": 0,
+          "out_tok": 33.166666666666664,
+          "reason_tok": 26.166666666666668
+        },
+        {
+          "name": "프런티어 LLM (gpt-6-astra)",
+          "acc": 0.9333333333333333,
+          "mean": 2863.5485849993224,
+          "p50": 2426.1324500002956,
+          "p95": 5842.805200001749,
+          "p99": 10231.922599996324,
+          "fmt_err": 0,
+          "out_tok": 11.45,
+          "reason_tok": 5.95
+        },
+        {
+          "name": "Jev + 프런티어",
+          "acc": 0.9166666666666666,
+          "mean": 1719.5941383330744,
+          "p50": 322.6230999971449,
+          "p95": 5303.757900001074,
+          "p99": 8528.498699997726,
+          "fmt_err": 0
+        }
+      ],
+      "models": [
+        "gpt-6-astra",
+        "gpt-6-luna",
+        "jev-1.13.0"
+      ],
+      "threshold": 0.9,
+      "gated": 33,
+      "gate_reliability": 0.9696969696969697,
+      "llm_call_pct": 0.44999999999999996,
+      "jev_brier": 0.23966666666666664,
+      "jev_ece": 0.06649999999999995,
+      "items": [
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 1.0,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 1.0,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "other",
+          "jev": "billing",
+          "conf": 1.0,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 0.79,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 1.0,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "other",
+          "jev": "billing",
+          "conf": 0.98,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 1.0,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 1.0,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "other",
+          "jev": "billing",
+          "conf": 1.0,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "other",
+          "jev": "billing",
+          "conf": 0.96,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 1.0,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 0.97,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "technical",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 0.98,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 0.4,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "sales",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 0.55,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "sales",
+          "rule": "billing",
+          "jev": "sales",
+          "conf": 0.42,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "sales",
+          "rule": "other",
+          "jev": "sales",
+          "conf": 0.54,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "sales",
+          "rule": "other",
+          "jev": "other",
+          "conf": 0.46,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "sales",
+          "rule": "other",
+          "jev": "sales",
+          "conf": 0.81,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "sales",
+          "rule": "other",
+          "jev": "sales",
+          "conf": 0.7,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "sales",
+          "rule": "other",
+          "jev": "sales",
+          "conf": 0.72,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "sales",
+          "rule": "other",
+          "jev": "other",
+          "conf": 0.37,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "sales",
+          "rule": "other",
+          "jev": "sales",
+          "conf": 0.83,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "sales",
+          "rule": "sales",
+          "jev": "sales",
+          "conf": 0.84,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "other",
+          "conf": 0.8,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "other",
+          "conf": 1.0,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "other",
+          "conf": 0.86,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "other",
+          "conf": 0.99,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 0.95,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "other",
+          "conf": 1.0,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "other",
+          "conf": 0.98,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "sales",
+          "conf": 0.66,
+          "small": "sales",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "other",
+          "conf": 0.69,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "other",
+          "conf": 0.49,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 1.0,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "sales",
+          "rule": "sales",
+          "jev": "other",
+          "conf": 0.79,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "other",
+          "conf": 0.74,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "technical",
+          "rule": "billing",
+          "jev": "technical",
+          "conf": 0.69,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "sales",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 0.78,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "sales",
+          "jev": "technical",
+          "conf": 0.59,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "billing",
+          "rule": "sales",
+          "jev": "technical",
+          "conf": 0.78,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 0.99,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 0.97,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "technical",
+          "rule": "billing",
+          "jev": "technical",
+          "conf": 0.4,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "sales",
+          "rule": "other",
+          "jev": "billing",
+          "conf": 0.82,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        },
+        {
+          "truth": "technical",
+          "rule": "other",
+          "jev": "technical",
+          "conf": 0.85,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "other",
+          "rule": "other",
+          "jev": "other",
+          "conf": 1.0,
+          "small": "other",
+          "frontier": "other",
+          "hybrid": "other"
+        },
+        {
+          "truth": "billing",
+          "rule": "billing",
+          "jev": "billing",
+          "conf": 0.99,
+          "small": "billing",
+          "frontier": "billing",
+          "hybrid": "billing"
+        },
+        {
+          "truth": "technical",
+          "rule": "technical",
+          "jev": "technical",
+          "conf": 1.0,
+          "small": "technical",
+          "frontier": "technical",
+          "hybrid": "technical"
+        },
+        {
+          "truth": "sales",
+          "rule": "sales",
+          "jev": "sales",
+          "conf": 0.78,
+          "small": "sales",
+          "frontier": "sales",
+          "hybrid": "sales"
+        }
+      ]
+    }
+  ]
+}
