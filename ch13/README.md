@@ -37,12 +37,12 @@ pip install langchain langchain-openai langchain-typesafe
 |---|---|---|
 | `corpus_tax.py` | 가상 세무 안내 문서 40건 | 13-1 |
 | `dataset_tax.py` | 질문 60건 (개발 30 + 검증 30, A·B·C군) | 13-1 |
-| `dataset_d.py` | 조건이 부족한 질문 (되묻기 실험용) | 13-4 |
+| `dataset_d.py` | 조건이 부족한 질문 (되묻기 실험용) | 13-2 |
 | `agent_tax.py` | `create_agent` 상담 에이전트. 도구 넷. 첫 프롬프트(`naive`)와 고친 프롬프트(`fixed`) | 13-1, 13-2 |
 | `judge_tax.py` | 2단계 채점기와 답변 검증 질문 | 13-1 |
 | `evaluate.py` | 60건 실행 + 채점. `--prompt naive/fixed`, `--verify` | 13-1, 13-2 |
 | `harness_eval.py` | `AutoModeMiddleware` 로 위험한 도구 막기 | 13-3 |
-| `eval_d.py` | 조건 부족 시 되묻는가 — 프롬프트 대 판단 모델 | 13-4 |
+| `eval_d.py` | 조건 부족 시 되묻는가 — 프롬프트(문서 검색 후 판단) 대 판단 모델(질문만 보는 사전 분류) | 13-2 |
 | `verify_cost.py` | 판단 1개 대 5개 측정. `--split dev/holdout`, 판정 행 전부 저장 | 13-4 |
 | `aggregate13.py` | 측정 파일에서 13-4 의 표를 다시 뽑는다. 모델을 부르지 않는다 | 13-4 |
 | `results/book/` | 책에 실린 13-2·13-4 수치의 원자료 | 13-2, 13-4 |
@@ -81,6 +81,9 @@ python ch13/harness_eval.py
 python ch13/eval_d.py base
 python ch13/eval_d.py prompt
 python ch13/eval_d.py jev
+
+# 6번의 두 방식은 입력이 다릅니다. 프롬프트 조건은 문서를 검색한 뒤 되물을지 정하고,
+# 판단 모델은 검색 전에 질문만 봅니다. 모델끼리의 능력 비교가 아니라 두 시스템의 비교입니다.
 
 # 7. 판단 1개 대 5개 — 1번의 답변을 입력으로, 개발셋으로 재고 홀드아웃으로 확인
 python ch13/verify_cost.py --split dev     --out ch13/results/cost_dev.json
