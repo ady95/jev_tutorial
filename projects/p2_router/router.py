@@ -9,6 +9,7 @@
 import random
 import sys
 import time
+import uuid
 from collections import Counter
 
 sys.path.insert(0, ".")
@@ -79,6 +80,7 @@ def route_and_answer(question, jev, llm):
     gen_ms = (time.perf_counter() - t1) * 1000
 
     return {
+        "request_id": uuid.uuid4().hex,          # 같은 질문이 여러 번 와도 요청마다 다르다
         "question": question,
         "tier": tier,
         "model": model,
@@ -109,27 +111,38 @@ def cost_of(entry):
 
 
 def savings_report(log, shadow):
-    """shadow: 싼 모델로 간 질문 일부를 프런티어로도 돌린 기록 (audit 에서 나온다)."""
-    cheap = [e for e in log if e["tier"] != "strong"]
-    by_q = {e["question"]: e for e in cheap}
-    pairs = [(by_q[s["question"]], s) for s in shadow if s["question"] in by_q]
+    """shadow: 싼 모델로 간 요청 일부를 프런티어로도 돌린 기록 (audit 에서 나온다).
+
+    요청은 request_id 로 짝짓는다. 질문 문자열로 짝지으면 같은 질문이 두 번 왔을 때 겹친다.
+    """
+    cheap = {e["request_id"]: e for e in log if e["tier"] != "strong"}
+    judging = len(log) * JEV_COST_PER_CALL           # 판단은 모든 요청에 붙는다
+    report = {"전체 건수": len(log), "싼 모델로 간 건": len(cheap),
+              "판단 비용": round(judging, 6)}
+    if not cheap:                                    # 아낀 것 없이 판단 비용만 남는다
+        report["라우팅 절감 추정 (감사 비용 제외)"] = round(-judging, 6)
+        return report
+
+    pairs = [(cheap[s["request_id"]], s) for s in shadow if s["request_id"] in cheap]
+    report["그중 프런티어로도 돌린 표본"] = len(pairs)
     if not pairs:
-        return {"비교": "shadow 가 없어 계산할 수 없음"}
+        report["라우팅 절감 추정 (감사 비용 제외)"] = "shadow 표본이 없어 추정 불가"
+        return report
 
     routed = sum(cost_of(e) for e, _ in pairs)
     frontier = sum(cost_of(s) for _, s in pairs)
     per_item = (frontier - routed) / len(pairs)      # 싼 모델로 보낸 한 건당 아낀 돈
-    judging = len(log) * JEV_COST_PER_CALL           # 판단은 모든 요청에 붙는다
-    saved = per_item * len(cheap) - judging
+    routing = per_item * len(cheap) - judging
+    # 감사가 실제로 쓴 돈: 프런티어 재호출 + 두 답변 비교 판단
+    audit_cost = sum(cost_of(s) for s in shadow) + len(shadow) * JEV_COST_PER_CALL
 
-    return {
-        "전체 건수": len(log),
-        "싼 모델로 간 건": len(cheap),
-        "그중 프런티어로도 돌린 표본": len(pairs),
+    report.update({
         "표본에서 싼 모델의 비용 비율": f"{routed / frontier:.1%}" if frontier else "-",
-        "판단 비용": round(judging, 6),
-        "전체 절감액 추정": round(saved, 6),
-    }
+        "라우팅 절감 추정 (감사 비용 제외)": round(routing, 6),
+        "감사 비용": round(audit_cost, 6),
+        "감사 포함 순절감": round(routing - audit_cost, 6),
+    })
+    return report
 
 
 def audit(log, llm, jev, sample_rate=0.05):
@@ -147,7 +160,8 @@ def audit(log, llm, jev, sample_rate=0.05):
             messages=[{"role": "user", "content": e["question"]}],
         )
         strong = resp.choices[0].message.content
-        shadow.append({"question": e["question"], "tier": "strong",
+        shadow.append({"request_id": e["request_id"],      # 원래 요청과 짝지을 키
+                       "question": e["question"], "tier": "strong",
                        "model": MODELS["strong"],
                        "in_tokens": resp.usage.prompt_tokens,
                        "out_tokens": resp.usage.completion_tokens})
