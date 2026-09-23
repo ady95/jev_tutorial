@@ -60,6 +60,7 @@ python ch09/benchmark.py
 |---|---|
 | 01-1 | `ch01/01_text_vs_json.py`, `ch01/03_models.py` |
 | 01-2 | `ch01/02_variance.py` |
+| 01-3, 06-3 | `ch01/04_tasks_ab.py` |
 | 02-2 | `ch02/first_call.py` |
 | 03-1 | `ch03/choice.py` |
 | 03-2 | `ch03/noul.py` |
@@ -74,7 +75,7 @@ python ch09/benchmark.py
 | 07-1 | `ch07/rag_rerank.py` |
 | 07-3 | `ch07/agent_risk.py` |
 | 09-1 | `ch09/benchmark.py` |
-| 09-4 | `ch09/hybrid_bench.py` |
+| 09-4 | `ch09/benchmark.py` (Jev + 프런티어 행) |
 | 11-2 | `ch11/01_abstain_signals.py` |
 | 11-3 | `ch11/02_reliability_stats.py` |
 | 11-4 | `ch11/03_audit_sampling.py` |
@@ -82,7 +83,7 @@ python ch09/benchmark.py
 | 13-1 | `ch13/agent_tax.py`, `ch13/judge_tax.py`, `ch13/evaluate.py` |
 | 13-2 | `ch13/evaluate.py` (모델을 바꿔가며) |
 | 13-3 | `ch13/harness_eval.py` |
-| 13-4 | `ch13/verify_cost2.py`, `ch13/verify_holdout.py`, `ch13/eval_d.py` |
+| 13-4 | `ch13/verify_cost.py`, `ch13/aggregate13.py`, `ch13/eval_d.py` |
 | 08-1 | `projects/p1_triage/` |
 | 08-2 | `projects/p2_router/` |
 | 08-3 | `projects/p3_rag/` |

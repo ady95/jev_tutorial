@@ -6,3 +6,7 @@ __pycache__/
 out/
 *.png
 !docs/*.png
+
+# 실행 결과 (책의 원자료 ch13/results/book/ 은 추적한다)
+ch13/results/*.json
+benchmark_result.json
