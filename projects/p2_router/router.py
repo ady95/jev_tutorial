@@ -117,10 +117,10 @@ def savings_report(log, shadow):
     """
     cheap = {e["request_id"]: e for e in log if e["tier"] != "strong"}
     judging = len(log) * JEV_COST_PER_CALL           # 판단은 모든 요청에 붙는다
-    report = {"전체 건수": len(log), "싼 모델로 간 건": len(cheap),
-              "판단 비용": round(judging, 6)}
+    report = {"전체 건수": len(log), "싼 모델로 간 건": len(cheap), "판단 비용": judging}
     if not cheap:                                    # 아낀 것 없이 판단 비용만 남는다
-        report["라우팅 절감 추정 (감사 비용 제외)"] = round(-judging, 6)
+        report.update({"라우팅 절감 추정 (감사 비용 제외)": -judging,
+                       "감사 비용": 0.0, "감사 포함 순절감": -judging})
         return report
 
     pairs = [(cheap[s["request_id"]], s) for s in shadow if s["request_id"] in cheap]
@@ -138,11 +138,16 @@ def savings_report(log, shadow):
 
     report.update({
         "표본에서 싼 모델의 비용 비율": f"{routed / frontier:.1%}" if frontier else "-",
-        "라우팅 절감 추정 (감사 비용 제외)": round(routing, 6),
-        "감사 비용": round(audit_cost, 6),
-        "감사 포함 순절감": round(routing - audit_cost, 6),
+        "라우팅 절감 추정 (감사 비용 제외)": routing,
+        "감사 비용": audit_cost,
+        "감사 포함 순절감": routing - audit_cost,
     })
-    return report
+    return report                                    # 반올림은 출력할 때만 한다
+
+
+def show_report(report):
+    for k, v in report.items():
+        print(f"  {k}: {v:.6g}" if isinstance(v, float) else f"  {k}: {v}")
 
 
 def audit(log, llm, jev, sample_rate=0.05):
@@ -208,7 +213,8 @@ def main():
         # 예제는 6건뿐이라 표본 비율을 높였다. 실제 트래픽에서는 5% 안팎이면 된다
         report = audit(log, llm, jev, sample_rate=0.5)     # 감사가 비용 기준선을 만든다
         print(f"\n품질 감사: { {k: v for k, v in report.items() if k != 'shadow'} }")
-        print(f"절감 리포트: {savings_report(log, report['shadow'])}")
+        print("절감 리포트:")
+        show_report(savings_report(log, report["shadow"]))
         print("  (PRICES 를 채워야 의미 있는 숫자가 나옵니다)")
 
 
