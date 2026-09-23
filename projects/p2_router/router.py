@@ -1,21 +1,28 @@
 # -*- coding: utf-8 -*-
-"""프로젝트 2: AI Model Router — 난이도에 따라 모델을 고르고 절감액을 잰다."""
+"""프로젝트 2: AI Model Router — 난이도에 따라 모델을 고르고 절감액을 잰다.
+
+책 08-2 의 코드와 같습니다. 등급은 둘(fast = 하위 티어, strong = 프런티어)이고,
+절감액의 기준선은 감사에서 프런티어로 실제 다시 돌린 기록(shadow)의 토큰으로 계산합니다.
+싼 모델의 토큰에 프런티어 단가를 곱하지 않습니다 — 모델마다 출력 길이가 달라서
+실제로는 비용이 늘었는데 절감으로 보일 수 있습니다.
+"""
 import random
 import sys
 import time
 from collections import Counter
 
 sys.path.insert(0, ".")
-from _common import (LLM, LLM_FRONTIER, LLM_SMALL, require_jev, require_llm, warmup_jev)
+from _common import LLM_FRONTIER, LLM_SMALL, require_jev, require_llm, warmup_jev
 
 require_jev()
 require_llm()
 from openai import OpenAI
 from typesafe_sdk import Noul, Score, TypeSafeClient
 
-oa = OpenAI()
-
-MODELS = {"fast": LLM_SMALL, "balanced": LLM, "strong": LLM_FRONTIER}
+MODELS = {
+    "fast": LLM_SMALL,        # 하위 티어 (.env 의 OPENAI_MODEL_SMALL)
+    "strong": LLM_FRONTIER,   # 프런티어 (.env 의 OPENAI_MODEL_FRONTIER)
+}
 
 # 여러분의 계약 단가로 채우세요 (100만 토큰당). 비워두면 절감액이 0으로 나옵니다.
 PRICES = {name: {"in": 0.0, "out": 0.0} for name in MODELS.values()}
@@ -50,13 +57,11 @@ def pick_tier(answers) -> str:
     sensitive = answers.nouls["sensitive"].noul
 
     if sensitive >= 0.7:
-        return "strong"       # 민감하면 난이도와 무관
+        return "strong"        # 민감하면 난이도와 무관
     if trust < 0.6:
-        return "balanced"     # 난이도 판정 자체가 애매하면 중간
-    if difficulty >= 1.5:
-        return "strong"
+        return "strong"        # 난이도 판정이 애매하면 안전한 쪽으로
     if difficulty >= 0.7:
-        return "balanced"
+        return "strong"
     return "fast"
 
 
@@ -66,19 +71,26 @@ def route_and_answer(question, jev, llm):
     judge_ms = (time.perf_counter() - t0) * 1000
 
     tier = pick_tier(judged)
+    model = MODELS[tier]
+
     t1 = time.perf_counter()
-    resp = llm.chat.completions.create(model=MODELS[tier],
-                                       messages=[{"role": "user", "content": question}])
+    resp = llm.chat.completions.create(
+        model=model, messages=[{"role": "user", "content": question}])
     gen_ms = (time.perf_counter() - t1) * 1000
 
-    return {"question": question, "tier": tier, "model": MODELS[tier],
-            "difficulty": round(judged.scores["difficulty"].score, 2),
-            "difficulty_confidence": round(judged.scores["difficulty"].confidence, 2),
-            "sensitive": round(judged.nouls["sensitive"].noul, 2),
-            "answer": resp.choices[0].message.content,
-            "in_tokens": resp.usage.prompt_tokens,
-            "out_tokens": resp.usage.completion_tokens,
-            "judge_ms": round(judge_ms), "gen_ms": round(gen_ms)}
+    return {
+        "question": question,
+        "tier": tier,
+        "model": model,
+        "difficulty": round(judged.scores["difficulty"].score, 2),
+        "difficulty_confidence": round(judged.scores["difficulty"].confidence, 2),
+        "sensitive": round(judged.nouls["sensitive"].noul, 2),
+        "answer": resp.choices[0].message.content,
+        "in_tokens": resp.usage.prompt_tokens,
+        "out_tokens": resp.usage.completion_tokens,
+        "judge_ms": round(judge_ms),
+        "gen_ms": round(gen_ms),
+    }
 
 
 def survey(questions, jev):
@@ -90,42 +102,58 @@ def survey(questions, jev):
     return buckets
 
 
-def cost_of(entry, model=None):
-    p = PRICES[model or entry["model"]]
+def cost_of(entry):
+    """단가표는 모델 이름으로 찾고, 그 기록에 남은 토큰으로만 계산한다."""
+    p = PRICES[entry["model"]]
     return entry["in_tokens"] / 1e6 * p["in"] + entry["out_tokens"] / 1e6 * p["out"]
 
 
-def savings_report(log):
-    actual = sum(cost_of(e) for e in log)
-    judging = len(log) * JEV_COST_PER_CALL
-    baseline = sum(cost_of(e, MODELS["strong"]) for e in log)
-    total = actual + judging
+def savings_report(log, shadow):
+    """shadow: 싼 모델로 간 질문 일부를 프런티어로도 돌린 기록 (audit 에서 나온다)."""
+    cheap = [e for e in log if e["tier"] != "strong"]
+    by_q = {e["question"]: e for e in cheap}
+    pairs = [(by_q[s["question"]], s) for s in shadow if s["question"] in by_q]
+    if not pairs:
+        return {"비교": "shadow 가 없어 계산할 수 없음"}
+
+    routed = sum(cost_of(e) for e, _ in pairs)
+    frontier = sum(cost_of(s) for _, s in pairs)
+    per_item = (frontier - routed) / len(pairs)      # 싼 모델로 보낸 한 건당 아낀 돈
+    judging = len(log) * JEV_COST_PER_CALL           # 판단은 모든 요청에 붙는다
+    saved = per_item * len(cheap) - judging
+
     return {
-        "건수": len(log),
-        "라우팅 적용": round(total, 4),
-        "생성 비용": round(actual, 4),
-        "판단 비용": round(judging, 4),
-        "전량 strong": round(baseline, 4),
-        "절감액": round(baseline - total, 4),
-        "절감률": f"{(1 - total / baseline):.1%}" if baseline else "단가 미설정",
+        "전체 건수": len(log),
+        "싼 모델로 간 건": len(cheap),
+        "그중 프런티어로도 돌린 표본": len(pairs),
+        "표본에서 싼 모델의 비용 비율": f"{routed / frontier:.1%}" if frontier else "-",
+        "판단 비용": round(judging, 6),
+        "전체 절감액 추정": round(saved, 6),
     }
 
 
-def audit(log, jev, llm, sample_rate=0.34):
-    """싼 모델로 보낸 건 일부를 strong으로 다시 돌려 비교한다."""
-    cheap = [e for e in log if e["tier"] != "strong"]
-    if not cheap:
-        return {"표본": 0, "불일치": 0}
-    sample = random.sample(cheap, max(1, int(len(cheap) * sample_rate)))
+def audit(log, llm, jev, sample_rate=0.05):
+    """싼 모델로 보낸 건 일부를 프런티어로 다시 돌려 비교한다.
 
-    findings = []
+    그때의 토큰 기록(shadow)이 savings_report 의 비용 기준선이 된다.
+    """
+    cheap = [e for e in log if e["tier"] != "strong"]
+    sample = random.sample(cheap, max(1, int(len(cheap) * sample_rate))) if cheap else []
+
+    findings, shadow = [], []
     for e in sample:
-        strong = llm.chat.completions.create(
+        resp = llm.chat.completions.create(
             model=MODELS["strong"],
             messages=[{"role": "user", "content": e["question"]}],
-        ).choices[0].message.content
+        )
+        strong = resp.choices[0].message.content
+        shadow.append({"question": e["question"], "tier": "strong",
+                       "model": MODELS["strong"],
+                       "in_tokens": resp.usage.prompt_tokens,
+                       "out_tokens": resp.usage.completion_tokens})
 
-        same = jev.system_one(
+        # 두 답변이 실질적으로 다른지 판단시킨다
+        cmp = jev.system_one(
             state={"질문": e["question"], "답변 A": e["answer"], "답변 B": strong},
             questions={"same": Noul(
                 instructions="두 답변이 실질적으로 같은 내용을 말하고 있는가?",
@@ -133,13 +161,19 @@ def audit(log, jev, llm, sample_rate=0.34):
                           "false": "사실이나 결론이 다르거나, 한쪽이 중요한 내용을 빠뜨렸다"})},
         ).nouls["same"].noul
 
-        if same < 0.5:
+        if cmp < 0.5:
             findings.append({"question": e["question"], "tier": e["tier"],
-                             "agreement": round(same, 2)})
-    return {"표본": len(sample), "불일치": len(findings), "상세": findings}
+                             "cheap": e["answer"], "strong": strong,
+                             "agreement": round(cmp, 2)})
+    return {"표본": len(sample), "불일치": len(findings), "상세": findings, "shadow": shadow}
 
 
 def main():
+    if MODELS["fast"] == MODELS["strong"]:
+        print("주의: fast 와 strong 이 같은 모델입니다. .env 에 OPENAI_MODEL_SMALL 과 "
+              "OPENAI_MODEL_FRONTIER 를 따로 지정하세요.\n")
+
+    llm = OpenAI()
     with TypeSafeClient() as jev:
         warmup_jev(jev, ROUTER_QUESTIONS["sensitive"])
 
@@ -147,7 +181,7 @@ def main():
         print(f"  {dict(survey(QUESTIONS, jev))}")
         print("  easy 비율이 낮으면 라우터를 만들지 마세요. 판단 비용만 늘어납니다.\n")
 
-        log = [route_and_answer(q, jev, oa) for q in QUESTIONS]
+        log = [route_and_answer(q, jev, llm) for q in QUESTIONS]
 
         print(f"{'등급':10} {'난이도':>7} {'확신':>6} {'민감':>6} {'판단ms':>8} "
               f"{'생성ms':>8}  질문")
@@ -155,11 +189,13 @@ def main():
             print(f"{e['tier']:10} {e['difficulty']:7.2f} "
                   f"{e['difficulty_confidence']:6.2f} {e['sensitive']:6.2f} "
                   f"{e['judge_ms']:8d} {e['gen_ms']:8d}  {e['question'][:34]}")
-
         print(f"\n등급별 분포: {dict(Counter(e['tier'] for e in log))}")
-        print(f"절감 리포트: {savings_report(log)}")
+
+        # 예제는 6건뿐이라 표본 비율을 높였다. 실제 트래픽에서는 5% 안팎이면 된다
+        report = audit(log, llm, jev, sample_rate=0.5)     # 감사가 비용 기준선을 만든다
+        print(f"\n품질 감사: { {k: v for k, v in report.items() if k != 'shadow'} }")
+        print(f"절감 리포트: {savings_report(log, report['shadow'])}")
         print("  (PRICES 를 채워야 의미 있는 숫자가 나옵니다)")
-        print(f"\n품질 감사: {audit(log, jev, oa)}")
 
 
 if __name__ == "__main__":
