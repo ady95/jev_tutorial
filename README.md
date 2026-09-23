@@ -75,7 +75,7 @@ python ch09/benchmark.py
 | 07-1 | `ch07/rag_rerank.py` |
 | 07-3 | `ch07/agent_risk.py` |
 | 09-1 | `ch09/benchmark.py` |
-| 09-4 | `ch09/benchmark.py` (Jev + 프런티어 행) |
+| 09-4 | `ch09/benchmark.py` (Jev + 프런티어 행), 책 표의 원자료 `ch09/results/book/` |
 | 11-2 | `ch11/01_abstain_signals.py` |
 | 11-3 | `ch11/02_reliability_stats.py` |
 | 11-4 | `ch11/03_audit_sampling.py` |
