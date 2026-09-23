@@ -1,22 +1,24 @@
 # -*- coding: utf-8 -*-
-"""같은 검증 일을 LLM으로 할 때와 Jev로 할 때.
+"""13-4 측정 도구 — 판단 1개와 5개를 판단 모델과 LLM 으로 잰다.
 
-지금까지 13부에서 잰 것은 전부 품질이었고 프롬프트가 이겼다. 여기서는
-**품질이 같을 때의 비용과 지연**을 잰다. 9부의 결론이 이쪽이었다.
+입력은 evaluate.py --prompt naive 가 만든 답변 캐시다. 에이전트는 다시
+돌리지 않는다.
 
-두 가지를 비교한다.
+    python ch13/evaluate.py --prompt naive
+    python ch13/verify_cost.py --split dev     --out ch13/results/cost_dev.json
+    python ch13/verify_cost.py --split holdout --out ch13/results/cost_holdout.json
+    python ch13/aggregate13.py ch13/results/cost_dev.json ch13/results/cost_holdout.json
 
-  1) 판단 하나          "답변이 문서에 근거하는가"
-  2) 판단 다섯 개       근거·완결성·조건 명시·단정 수위·되물음 필요
+네 종류 호출의 순서를 건마다 섞는다. 안 섞으면 먼저 나가는 호출이 연결
+비용을 더 물어, 판단 1개가 5개보다 느리게 나오는 착시가 생긴다.
 
-두 번째가 핵심이다. Jev는 한 번의 호출로 다섯을 병렬 평가하고, LLM은
-한 프롬프트에 묶으면 판단이 서로 간섭한다(1부 두 번째 절). 따로 부르면
-비용이 다섯 배다.
-
-이미 저장한 답변을 재사용하므로 에이전트는 다시 돌리지 않는다.
+품질 비교는 판단 하나(grounded)만 한다. 다섯 개를 물은 쪽은 원응답을
+저장하지만 항목별 정답 기준이 없어 채점하지 않는다.
 """
+import argparse
 import json
 import os
+import random
 import statistics
 import sys
 import time
@@ -95,76 +97,97 @@ needs_followup: 사용자에게 추가로 물어봐야 하는가"""
 
 
 def llm_call(prompt):
+    """(지연 ms, 입력 토큰, 출력 토큰, 그중 추론 토큰, 본문)"""
     t0 = time.perf_counter()
     r = oa.chat.completions.create(model=LLM, messages=[{"role": "user", "content": prompt}])
     ms = (time.perf_counter() - t0) * 1000
     u = r.usage
-    return ms, u.prompt_tokens, u.completion_tokens, r.choices[0].message.content.strip()
+    d = getattr(u, "completion_tokens_details", None)
+    d = (d if isinstance(d, dict) else d.model_dump()) if d else {}
+    return (ms, u.prompt_tokens, u.completion_tokens, d.get("reasoning_tokens", 0) or 0,
+            (r.choices[0].message.content or "").strip())
 
 
 def jev_call(state, questions):
+    """(지연 ms, 입력 토큰, 출력 토큰, 응답)"""
     t0 = time.perf_counter()
     r = clf.invoke({"state": state, "questions": questions})
     ms = (time.perf_counter() - t0) * 1000
     return ms, r.usage.input_tokens, r.usage.output_tokens, r
 
 
-def summarize(name, lat, tin, tout):
-    print(f"  {name:28} P50 {statistics.median(lat):7.0f} ms   "
-          f"평균 {statistics.mean(lat):7.0f} ms   "
-          f"입력 {statistics.mean(tin):6.0f} tok   출력 {statistics.mean(tout):5.1f} tok")
-
-
-def main():
-    rows = json.loads((HERE / "result_naive.json").read_text(encoding="utf-8"))
-    sample = (rows["dev"] + rows["holdout"])[:30]
-
-    # 워밍업
-    jev_call({"질문": "워밍업", "답변": "워밍업"}, ONE)
+def measure(sample, seed=11):
+    """sample 의 각 답변에 네 종류 호출을 무작위 순서로 보낸다."""
+    rng = random.Random(seed)
+    jev_call({"질문": "워밍업", "답변": "워밍업"}, ONE)          # 첫 호출 비용 제외
+    jev_call({"질문": "워밍업", "답변": "워밍업"}, QUESTIONS)
     llm_call(PROMPT_ONE.format(docs="-", q="워밍업", a="워밍업"))
+    llm_call(PROMPT_FIVE.format(docs="-", q="워밍업", a="워밍업"))
 
-    acc = {k: ([], [], []) for k in ("jev1", "llm1", "jev5", "llm5")}
-    agree = 0
+    lat = {k: {"ms": [], "in": [], "out": [], "reason": []} for k in ("jev1", "llm1", "jev5", "llm5")}
+    rows = []
     for r in sample:
         docs = "\n\n".join(as_text(BY_ID[i]) for i in r["docs"]) or "(검색된 문서 없음)"
         state = {"질문": r["q"], "검색된 문서": docs, "답변": r["answer"]}
+        rec = {k: r[k] for k in ("q", "group", "grade", "docs")}
+        rec["answer"] = r["answer"][:200]
 
-        ms, ti, to, resp = jev_call(state, ONE)
-        for L, v in zip(acc["jev1"], (ms, ti, to)):
-            L.append(v)
-        jev_yes = resp.nouls["grounded"].noul >= 0.5
+        def jev1():
+            ms, ti, to, resp = jev_call(state, ONE)
+            rec["p_jev"] = resp.nouls["grounded"].noul
+            rec["jev"] = rec["p_jev"] >= 0.5
+            return "jev1", ms, ti, to, 0
 
-        ms, ti, to, text = llm_call(PROMPT_ONE.format(docs=docs, q=r["q"], a=r["answer"]))
-        for L, v in zip(acc["llm1"], (ms, ti, to)):
-            L.append(v)
-        llm_yes = text.lower().startswith("yes")
-        agree += int(jev_yes == llm_yes)
+        def llm1():
+            ms, ti, to, rt, text = llm_call(PROMPT_ONE.format(docs=docs, q=r["q"], a=r["answer"]))
+            rec["llm"] = text.lower().startswith("yes")
+            return "llm1", ms, ti, to, rt
 
-        ms, ti, to, _ = jev_call(state, QUESTIONS)
-        for L, v in zip(acc["jev5"], (ms, ti, to)):
-            L.append(v)
+        def jev5():
+            ms, ti, to, resp = jev_call(state, QUESTIONS)
+            rec["jev5"] = {k: round(resp.nouls[k].noul, 4) for k in QUESTIONS}
+            return "jev5", ms, ti, to, 0
 
-        ms, ti, to, _ = llm_call(PROMPT_FIVE.format(docs=docs, q=r["q"], a=r["answer"]))
-        for L, v in zip(acc["llm5"], (ms, ti, to)):
-            L.append(v)
+        def llm5():
+            ms, ti, to, rt, text = llm_call(PROMPT_FIVE.format(docs=docs, q=r["q"], a=r["answer"]))
+            rec["llm5_raw"] = text[:300]
+            try:
+                parsed = json.loads(text.strip().strip("`").removeprefix("json").strip())
+                rec["llm5_json_ok"] = set(parsed) == set(QUESTIONS)
+            except Exception:
+                rec["llm5_json_ok"] = False
+            return "llm5", ms, ti, to, rt
 
-    print(f"\n판단 1개  (n={len(sample)})")
-    summarize("Jev", *acc["jev1"])
-    summarize("LLM", *acc["llm1"])
-    print(f"\n판단 5개  (n={len(sample)})")
-    summarize("Jev  (한 번의 호출)", *acc["jev5"])
-    summarize("LLM  (한 프롬프트에 묶음)", *acc["llm5"])
+        tasks = [jev1, llm1, jev5, llm5]
+        rng.shuffle(tasks)
+        for t in tasks:
+            key, ms, ti, to, rt = t()
+            for field, v in (("ms", ms), ("in", ti), ("out", to), ("reason", rt)):
+                lat[key][field].append(v)
+        rows.append(rec)
+    return lat, rows
 
-    j1, l1 = statistics.median(acc["jev1"][0]), statistics.median(acc["llm1"][0])
-    j5, l5 = statistics.median(acc["jev5"][0]), statistics.median(acc["llm5"][0])
-    print(f"\n  지연 비율   판단 1개 {l1/j1:.1f}배   판단 5개 {l5/j5:.1f}배")
-    print(f"  Jev 판단 1개 -> 5개 지연 증가  {j5/j1:.2f}배")
-    print(f"  LLM 판단 1개 -> 5개 지연 증가  {l5/l1:.2f}배")
-    print(f"  두 방식의 grounded 판정 일치   {agree}/{len(sample)} = {agree/len(sample):.1%}")
 
-    (HERE / "verify_cost.json").write_text(
-        json.dumps({k: {"ms": v[0], "in": v[1], "out": v[2]} for k, v in acc.items()},
-                   ensure_ascii=False, indent=2), encoding="utf-8")
+def main():
+    ap = argparse.ArgumentParser(description="13-4 판단 1개 대 5개 측정")
+    ap.add_argument("--input", default=str(HERE / "results" / "result_naive.json"),
+                    help="evaluate.py --prompt naive 가 만든 답변 캐시")
+    ap.add_argument("--split", choices=["dev", "holdout"], required=True)
+    ap.add_argument("--seed", type=int, default=11)
+    ap.add_argument("--limit", type=int, default=None, help="앞 N건만 (점검용)")
+    ap.add_argument("--out", required=True)
+    a = ap.parse_args()
+
+    src = json.loads(Path(a.input).read_text(encoding="utf-8"))
+    sample = src[a.split][:a.limit]
+    print(f"입력 {a.input} · {a.split} {len(sample)}건 · LLM {LLM} · 씨앗 {a.seed}")
+    lat, rows = measure(sample, seed=a.seed)
+    out = {"meta": {"input": Path(a.input).name, "split": a.split, "seed": a.seed,
+                    "llm": LLM, "n": len(rows)},
+           "latency": lat, "rows": rows}
+    Path(a.out).parent.mkdir(parents=True, exist_ok=True)
+    Path(a.out).write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"저장: {a.out}  — 표는 aggregate13.py 로 뽑습니다")
 
 
 if __name__ == "__main__":

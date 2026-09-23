@@ -26,6 +26,14 @@ from corpus_tax import CORPUS, as_text
 MODEL = os.getenv("TAX_AGENT_MODEL", "openai:gpt-6-luna")
 TOP_K = 3
 
+# 13-1 의 첫 프롬프트. 날조가 나온 조건이며 13-4 측정의 입력 답변을 만든다
+SYSTEM_NAIVE = (
+    "당신은 한빛소프트웨어 세무 안내 담당자입니다. "
+    "search_tax_docs 로 문서를 찾아 고객 질문에 친절하게 답하세요. "
+    "답변은 세 문장 이내로 간결하게 쓰세요."
+)
+
+# 13-2 에서 고친 프롬프트. 기본값이다
 SYSTEM = (
     "당신은 한빛소프트웨어 세무 안내 담당자입니다. "
     "반드시 search_tax_docs 로 사내 안내 문서를 찾은 뒤, "
@@ -94,11 +102,13 @@ RISKY_TOOLS = [email_customer, update_filing]
 ALL_TOOLS = SAFE_TOOLS + RISKY_TOOLS
 
 
-def build(middleware=None, tools=None):
+def build(middleware=None, tools=None, prompt="fixed"):
+    """prompt: "fixed"(13-2, 기본) 또는 "naive"(13-1)."""
+    system = SYSTEM_NAIVE if prompt == "naive" else SYSTEM
     return create_agent(
         MODEL,
         tools=tools if tools is not None else SAFE_TOOLS,
-        system_prompt=SYSTEM,
+        system_prompt=system,
         middleware=middleware or [],
     )
 

@@ -28,7 +28,7 @@ os.environ.setdefault("OPENAI_API_BASE", os.environ.get("OPENAI_BASE_URL", ""))
 
 from langchain_typesafe import TypeSafeClassifier
 
-from agent_tax import ask, build
+from agent_tax import MODEL as MODEL_NAME, ask, build
 from judge_tax import BLOCKED, grade, verify
 from dataset_tax import TAX_DEV, TAX_HOLDOUT
 
@@ -66,11 +66,23 @@ def run(dataset, label, app, use_verify):
 
 
 if __name__ == "__main__":
-    use_verify = "--verify" in sys.argv
-    print("Jev 답변 검증:", "켬" if use_verify else "끔")
-    app = build()
-    out = {"dev": run(TAX_DEV, "개발셋", app, use_verify),
-           "holdout": run(TAX_HOLDOUT, "검증셋", app, use_verify)}
-    name = f"result_{'verify' if use_verify else 'base'}.json"
-    (HERE / name).write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"\n저장: {name}")
+    import argparse
+    ap = argparse.ArgumentParser(description="13부 에이전트를 60건에 돌리고 채점한다")
+    ap.add_argument("--prompt", choices=["fixed", "naive"], default="fixed",
+                    help="fixed=13-2 한 줄 추가(기본), naive=13-1 첫 프롬프트")
+    ap.add_argument("--verify", action="store_true", help="판단 모델로 답변을 검증한다")
+    ap.add_argument("--limit", type=int, default=None, help="셋마다 앞 N건만 (점검용)")
+    ap.add_argument("--out", default=None, help="저장 경로 (기본 results/result_<prompt>.json)")
+    a = ap.parse_args()
+
+    print("프롬프트:", a.prompt, "· 판단 검증:", "켬" if a.verify else "끔", "· 모델:", MODEL_NAME)
+    app = build(prompt=a.prompt)
+    dev, hold = TAX_DEV[:a.limit], TAX_HOLDOUT[:a.limit]
+    out = {"meta": {"prompt": a.prompt, "verify": a.verify, "model": MODEL_NAME},
+           "dev": run(dev, "개발셋", app, a.verify),
+           "holdout": run(hold, "검증셋", app, a.verify)}
+    path = Path(a.out) if a.out else HERE / "results" / (
+        f"result_{a.prompt}{'_verify' if a.verify else ''}.json")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"\n저장: {path}")
