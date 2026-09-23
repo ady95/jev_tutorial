@@ -1,149 +1,223 @@
-# -*- coding: utf-8 -*-
-"""09-1 실습: 규칙 / 소형 LLM / 프런티어 LLM / Jev 4파전 벤치마크.
+# benchmark.py — 9부의 표를 만든 기준 구현
+"""9부 4파전 + 하이브리드. 책 9부의 표는 이 파일로 쟀다.
 
-같은 평가셋, 같은 부서 정의, 같은 회선, 각 방식 워밍업 1회 후 측정합니다.
+    python benchmark.py                   개발셋 1회 + 검증셋 3회
+    python benchmark.py --holdout-runs 1
+    python benchmark.py --limit 5         셋마다 앞 5건 (배선 확인용)
 
-주의: LLM 호출이 많습니다. 실행 전 단가를 확인하세요.
+임계값 정책: 개발셋 1회에서 "무오류를 유지하는 가장 낮은 값"을 고르고, 그 값을
+검증셋의 모든 회차에 그대로 쓴다. 검증셋 회차마다 다시 고르지 않는다.
 """
-import io
+import argparse
 import json
-import os
 import re
 import statistics
-import sys
 import time
 
-sys.path.insert(0, ".")
-from _common import (LLM_FRONTIER, LLM_SMALL, pct, require_jev, require_llm, warmup_jev)
-from dataset.inquiries import DEPARTMENTS, LABELS, TEXTS, TRUTHS
-
-require_jev()
-require_llm()
+from dotenv import load_dotenv
 from openai import OpenAI
 from typesafe_sdk import Choice, TypeSafeClient
 
-oa = OpenAI()
-DEPT = Choice(criteria=DEPARTMENTS)
+try:                                    # 부록 D 를 그대로 저장한 경우
+    from dataset_dev import DEV
+    from dataset_holdout import HOLDOUT
+except ImportError:                     # 예제 저장소
+    from dataset.inquiries import INQUIRIES as DEV
+    from dataset.holdout import HOLDOUT
 
-PROMPT = ("다음 고객 문의를 담당 부서로 분류하세요.\n\n"
-          + "\n".join(f"- {k}: {v}" for k, v in DEPARTMENTS.items())
-          + "\n\n문의: {q}\n\n부서 이름 하나만 답하세요. 다른 말은 쓰지 마세요.")
+load_dotenv()
+SMALL, FRONTIER = "gpt-6-luna", "gpt-6-astra"      # 쓰실 모델로 바꾸세요
 
-# 비교군으로 쓸 규칙은 성의껏 만들어야 공정합니다.
+LABELS = ["billing", "technical", "sales", "other"]
+VALID = "|".join(LABELS)
+DEPARTMENTS = {
+    "billing": "요금, 결제, 환불, 세금계산서 관련",
+    "technical": "오류, 장애, 사용법, 연동 문제",
+    "sales": "구매 상담, 견적, 요금제 문의",
+    "other": "위 어디에도 해당하지 않음",
+}
+# LLM 에는 부서 이름만 준다. Jev 에는 위 설명을 준다 — 9부 첫 절의 주의 참고
+PROMPT = ("다음 고객 문의를 billing, technical, sales, other 중 하나로 분류하세요. "
+          "부서 이름 하나만 답하세요.\n\n문의: ")
+
+# 후보 설명만 보고 쓴 키워드다. 오답 목록을 보고 늘리지 않았다.
+# sales 를 billing 보다 먼저 봐야 "요금제"가 요금으로 새지 않는다.
 RULES = [
-    ("billing", ["환불", "결제", "청구", "요금", "세금계산서", "영수증",
-                 "카드", "부가세", "입금", "정산"]),
-    ("technical", ["오류", "에러", "안 됩니다", "안됩니다", "멈춰", "실패", "버그",
-                   "로그인", "api", "깨져", "느립니다"]),
-    ("sales", ["견적", "플랜", "도입", "할인", "체험", "제휴", "파트너", "상담", "계약"]),
+    ("sales", ["견적", "요금제", "플랜", "도입", "구매", "계약", "상담"]),
+    ("billing", ["결제", "환불", "요금", "청구", "세금계산서", "영수증", "카드", "인보이스"]),
+    ("technical", ["오류", "에러", "장애", "연동", "API", "로그인", "사용법",
+                   "안 됩니다", "안 돼"]),
 ]
 
 
-def rule_predict(text):
-    low = text.lower()
-    best, hits = "other", 0
-    for label, keywords in RULES:
-        c = sum(1 for k in keywords if k in low)
-        if c > hits:
-            best, hits = label, c
+def pct(xs, p):
+    """p 백분위. 60건에서 P99 는 사실상 최댓값이다."""
+    s = sorted(xs)
+    return s[min(int(len(s) * p / 100), len(s) - 1)]
+
+
+def rule_run(texts):
+    preds, lat = [], []
+    for text in texts:
+        t0 = time.perf_counter()
+        pred = "other"
+        for label, words in RULES:
+            if any(w in text for w in words):
+                pred = label
+                break
+        preds.append(pred)
+        lat.append((time.perf_counter() - t0) * 1000)
+    return preds, lat
+
+
+def jev_run(texts, client):
+    q = {"d": Choice(criteria=DEPARTMENTS)}
+    client.system_one(state="워밍업", questions=q)          # 첫 호출 제외
+    preds, lat, confs, probs = [], [], [], []
+    for text in texts:
+        t0 = time.perf_counter()
+        a = client.system_one(state=text, questions=q).choices["d"]
+        lat.append((time.perf_counter() - t0) * 1000)
+        preds.append(a.choice)
+        confs.append(a.confidence)
+        probs.append(dict(a.probabilities))
+    return preds, lat, confs, probs
+
+
+def llm_run(texts, oa, model):
+    oa.chat.completions.create(                            # 워밍업
+        model=model, messages=[{"role": "user", "content": PROMPT + "테스트"}])
+    preds, lat, fmt_err, out_tok, reason_tok = [], [], 0, [], []
+    for text in texts:
+        t0 = time.perf_counter()
+        r = oa.chat.completions.create(
+            model=model, messages=[{"role": "user", "content": PROMPT + text}])
+        lat.append((time.perf_counter() - t0) * 1000)
+        out_tok.append(r.usage.completion_tokens)
+        d = getattr(r.usage, "completion_tokens_details", None)
+        d = (d if isinstance(d, dict) else d.model_dump()) if d else {}
+        reason_tok.append(d.get("reasoning_tokens", 0) or 0)
+        txt = (r.choices[0].message.content or "").strip()
+        if re.fullmatch(rf"({VALID})\.?", txt):
+            preds.append(txt.rstrip("."))
+        else:
+            fmt_err += 1                                   # 형식을 안 지킨 건
+            m = re.search(VALID, txt)
+            preds.append(m.group(0) if m else "other")
+    return preds, lat, fmt_err, out_tok, reason_tok
+
+
+def hybrid(jev_preds, jev_confs, llm_preds, threshold):
+    """confidence가 임계값 이상이면 Jev 답을 쓰고, 아니면 LLM에 넘긴다."""
+    return [j if c >= threshold else l
+            for j, c, l in zip(jev_preds, jev_confs, llm_preds)]
+
+
+def pick_threshold(preds, confs, truths, candidates=(0.5, 0.7, 0.8, 0.9, 0.95)):
+    """개발셋에서만 부른다 — 게이트 구간에서 무오류를 유지하는 가장 낮은 값."""
+    best = candidates[-1]
+    for th in candidates:
+        gate = [(p, t) for p, c, t in zip(preds, confs, truths) if c >= th]
+        if gate and all(p == t for p, t in gate):
+            best = th
+            break
     return best
 
 
-def llm_run(model, texts):
-    """형식 오류는 따로 세되 정확도에서는 정규식으로 구제합니다."""
-    oa.chat.completions.create(model=model,
-                               messages=[{"role": "user", "content": PROMPT.format(q="워밍업")}])
-    lat, out, preds, fmt_err = [], 0, [], 0
-    for t in texts:
-        t0 = time.perf_counter()
-        r = oa.chat.completions.create(model=model,
-                                       messages=[{"role": "user", "content": PROMPT.format(q=t)}])
-        lat.append((time.perf_counter() - t0) * 1000)
-        out += r.usage.completion_tokens
-        txt = (r.choices[0].message.content or "").strip().lower()
-        m = re.fullmatch(r"(billing|technical|sales|other)\.?", txt)
-        if m:
-            preds.append(m.group(1))
-        else:
-            fmt_err += 1
-            m2 = re.search(r"billing|technical|sales|other", txt)
-            preds.append(m2.group(0) if m2 else "other")
-    return preds, lat, out, fmt_err
+def brier(probs, truths):
+    return statistics.mean(sum((p.get(l, 0.0) - (1.0 if l == t else 0.0)) ** 2
+                               for l in LABELS) for p, t in zip(probs, truths))
 
 
-def jev_run(texts):
-    lat, out, preds, probs, confs = [], 0, [], [], []
-    with TypeSafeClient() as c:
-        warmup_jev(c, DEPT)
-        for t in texts:
-            t0 = time.perf_counter()
-            r = c.system_one(state=t, questions={"d": DEPT})
-            lat.append((time.perf_counter() - t0) * 1000)
-            out += r.usage.output_tokens
-            a = r.choices["d"]
-            preds.append(a.choice)
-            probs.append(dict(a.probabilities))
-            confs.append(a.confidence)
-    return preds, lat, out, probs, confs
-
-
-def main():
-    n = len(TEXTS)
-    rows = []
-
-    print("[1/4] 규칙 엔진")
-    t0 = time.perf_counter()
-    rule_preds = [rule_predict(t) for t in TEXTS]
-    rule_ms = (time.perf_counter() - t0) * 1000 / n
-    rows.append({"name": "규칙 엔진",
-                 "acc": sum(p == t for p, t in zip(rule_preds, TRUTHS)) / n,
-                 "mean": rule_ms, "p50": rule_ms, "p95": rule_ms, "p99": rule_ms,
-                 "out_tok": 0.0, "fmt_err": 0, "has_prob": False})
-
-    for i, model in enumerate([LLM_SMALL, LLM_FRONTIER], start=2):
-        print(f"[{i}/4] LLM ({model})")
-        p, lat, out, fe = llm_run(model, TEXTS)
-        rows.append({"name": f"LLM ({model})",
-                     "acc": sum(a == b for a, b in zip(p, TRUTHS)) / n,
-                     "mean": statistics.mean(lat), "p50": pct(lat, 50),
-                     "p95": pct(lat, 95), "p99": pct(lat, 99),
-                     "out_tok": out / n, "fmt_err": fe, "has_prob": False})
-
-    print("[4/4] Jev")
-    jp, jlat, jout, jprobs, jconfs = jev_run(TEXTS)
-    correct = [a == b for a, b in zip(jp, TRUTHS)]
-    brier = sum(sum((pr.get(l, 0.0) - (1.0 if l == tr else 0.0)) ** 2 for l in LABELS)
-                for pr, tr in zip(jprobs, TRUTHS)) / n
-    e = 0.0
-    for i in range(10):
-        lo, hi = i / 10, (i + 1) / 10
-        idx = [k for k, c in enumerate(jconfs) if lo < c <= hi]
+def ece(confs, correct, n_bins=10):
+    n, total = len(confs), 0.0
+    for i in range(n_bins):
+        lo, hi = i / n_bins, (i + 1) / n_bins
+        idx = [k for k, c in enumerate(confs) if (lo < c <= hi) or (i == 0 and c == 0.0)]
         if idx:
-            mc = sum(jconfs[k] for k in idx) / len(idx)
-            ma = sum(correct[k] for k in idx) / len(idx)
-            e += len(idx) / n * abs(mc - ma)
-    rows.append({"name": "Jev", "acc": sum(correct) / n,
-                 "mean": statistics.mean(jlat), "p50": pct(jlat, 50),
-                 "p95": pct(jlat, 95), "p99": pct(jlat, 99),
-                 "out_tok": jout / n, "fmt_err": 0, "has_prob": True,
-                 "brier": brier, "ece": e})
+            total += len(idx) / n * abs(statistics.mean(confs[k] for k in idx)
+                                        - statistics.mean(correct[k] for k in idx))
+    return total
 
-    print(f"\n{'방식':26} {'정확도':>7} {'평균ms':>8} {'P50':>7} {'P95':>7} "
-          f"{'P99':>8} {'출력tok':>8} {'형식오류':>8} {'확률':>5}")
-    for r in rows:
-        print(f"{r['name']:26} {r['acc']:7.3f} {r['mean']:8.0f} {r['p50']:7.0f} "
-              f"{r['p95']:7.0f} {r['p99']:8.0f} {r['out_tok']:8.1f} "
-              f"{r['fmt_err']:8d} {'있음' if r['has_prob'] else '없음':>5}")
-    print(f"\nJev 보정: Brier {brier:.4f}  ECE {e:.4f}")
-    print("\n평균만 보지 마세요. P95와 P99가 이야기를 바꿉니다.")
-    print("다음: python ch09/hybrid_bench.py 로 하이브리드를 비교군에 추가하세요.")
 
-    os.makedirs("out", exist_ok=True)
-    json.dump({"n": n, "rows": rows},
-              io.open("out/benchmark.json", "w", encoding="utf-8"),
-              ensure_ascii=False, indent=2)
-    print("저장 -> out/benchmark.json")
+def row(name, preds, truths, lat, fmt_err=0, out_tok=None, reason_tok=None):
+    d = {"name": name, "acc": sum(p == t for p, t in zip(preds, truths)) / len(truths),
+         "mean": statistics.mean(lat), "p50": statistics.median(lat),
+         "p95": pct(lat, 95), "p99": pct(lat, 99), "fmt_err": fmt_err}
+    if out_tok:
+        d["out_tok"] = statistics.mean(out_tok)
+        d["reason_tok"] = statistics.mean(reason_tok)
+    return d
+
+
+def bench(dataset, label, oa, client, threshold=None):
+    texts = [x for x, _, _ in dataset]
+    truths = [y for _, y, _ in dataset]
+    out = {"label": label, "rows": []}
+
+    rp, rl = rule_run(texts)
+    out["rows"].append(row("규칙 엔진", rp, truths, rl))
+    jp, jl, jc, jprob = jev_run(texts, client)
+    out["rows"].append(row("Jev 단독", jp, truths, jl))
+    sp, sl, se, so, sr = llm_run(texts, oa, SMALL)
+    out["rows"].append(row(f"하위 티어 LLM ({SMALL})", sp, truths, sl, se, so, sr))
+    fp, fl, fe, fo, fr = llm_run(texts, oa, FRONTIER)
+    out["rows"].append(row(f"프런티어 LLM ({FRONTIER})", fp, truths, fl, fe, fo, fr))
+
+    if threshold is None:
+        threshold = pick_threshold(jp, jc, truths)
+    hp = hybrid(jp, jc, fp, threshold)
+    hl = [j if c >= threshold else j + f
+          for j, c, f in zip(jl, jc, fl)]          # 게이트 미통과 건은 두 번 부른다
+    out["rows"].append(row("Jev + 프런티어", hp, truths, hl))
+
+    gate = [p == t for p, c, t in zip(jp, jc, truths) if c >= threshold]
+    out.update(threshold=threshold, gated=len(gate),
+               gate_reliability=sum(gate) / len(gate) if gate else None,
+               llm_call_pct=1 - len(gate) / len(texts),
+               jev_brier=brier(jprob, truths),
+               jev_ece=ece(jc, [p == t for p, t in zip(jp, truths)]))
+    return out
+
+
+def show(r):
+    print(f"\n[{r['label']}]  임계값 {r['threshold']}  게이트 통과 {r['gated']}건  "
+          f"게이트 신뢰도 {r['gate_reliability']}  LLM 호출 {r['llm_call_pct']:.1%}  "
+          f"Jev Brier {r['jev_brier']:.4f}  ECE {r['jev_ece']:.4f}")
+    print(f"{'방식':28}{'정확도':>7}{'평균':>8}{'P50':>8}{'P95':>8}{'P99':>8}"
+          f"{'출력tok':>8}{'추론tok':>8}{'형식오류':>6}")
+    for x in r["rows"]:
+        ot = f"{x['out_tok']:8.1f}{x['reason_tok']:8.1f}" if "out_tok" in x else " " * 16
+        print(f"{x['name']:28}{x['acc']:7.3f}{x['mean']:8.0f}{x['p50']:8.0f}"
+              f"{x['p95']:8.0f}{x['p99']:8.0f}{ot}{x['fmt_err']:6d}")
 
 
 if __name__ == "__main__":
-    main()
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--holdout-runs", type=int, default=3)
+    ap.add_argument("--limit", type=int, default=None)
+    ap.add_argument("--out", default="benchmark_result.json")
+    a = ap.parse_args()
+    dev, hold = DEV[:a.limit], HOLDOUT[:a.limit]
+
+    oa = OpenAI()
+    with TypeSafeClient() as client:
+        d = bench(dev, "개발셋", oa, client)
+        show(d)
+        th = d["threshold"]
+        print(f"\n개발셋에서 고른 임계값 {th} 를 검증셋 {a.holdout_runs}회에 그대로 씁니다")
+        hs = [bench(hold, f"검증셋 {i + 1}회", oa, client, threshold=th)
+              for i in range(a.holdout_runs)]
+        for h in hs:
+            show(h)
+
+    print(f"\n[검증셋 {len(hs)}회 평균]")
+    for i, x in enumerate(hs[0]["rows"]):
+        accs = [h["rows"][i]["acc"] for h in hs]
+        print(f"  {x['name']:28} 정확도 {statistics.mean(accs):.3f} "
+              f"({min(accs):.3f}~{max(accs):.3f})  "
+              f"P50 {statistics.median(h['rows'][i]['p50'] for h in hs):6.0f} ms")
+    with open(a.out, "w", encoding="utf-8") as f:
+        json.dump({"threshold_policy": "dev 1회에서 선택, 검증 전 회차에 고정",
+                   "dev": d, "holdout": hs}, f, ensure_ascii=False, indent=2)
+    print(f"\n저장: {a.out}")
