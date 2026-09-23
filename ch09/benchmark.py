@@ -36,9 +36,10 @@ DEPARTMENTS = {
     "sales": "구매 상담, 견적, 요금제 문의",
     "other": "위 어디에도 해당하지 않음",
 }
-# LLM 에는 부서 이름만 준다. Jev 에는 위 설명을 준다 — 9부 첫 절의 주의 참고
-PROMPT = ("다음 고객 문의를 billing, technical, sales, other 중 하나로 분류하세요. "
-          "부서 이름 하나만 답하세요.\n\n문의: ")
+# 같은 정의: LLM 프롬프트와 Jev 의 criteria 에 위 설명을 똑같이 넣는다
+PROMPT = ("다음 고객 문의를 아래 부서 중 하나로 분류하세요. 부서 이름 하나만 답하세요.\n\n"
+          + "\n".join(f"- {k}: {v}" for k, v in DEPARTMENTS.items())
+          + "\n\n문의: ")
 
 # 후보 설명만 보고 쓴 키워드다. 오답 목록을 보고 늘리지 않았다.
 # sales 를 billing 보다 먼저 봐야 "요금제"가 요금으로 새지 않는다.
@@ -51,7 +52,7 @@ RULES = [
 
 
 def pct(xs, p):
-    """p 백분위. 60건에서 P99 는 사실상 최댓값이다."""
+    """p 백분위. 100건 이하에서 P99 는 최댓값 그 자체다."""
     s = sorted(xs)
     return s[min(int(len(s) * p / 100), len(s) - 1)]
 
@@ -73,26 +74,30 @@ def rule_run(texts):
 def jev_run(texts, client):
     q = {"d": Choice(criteria=DEPARTMENTS)}
     client.system_one(state="워밍업", questions=q)          # 첫 호출 제외
-    preds, lat, confs, probs = [], [], [], []
+    preds, lat, confs, probs, out_tok, models = [], [], [], [], [], []
     for text in texts:
         t0 = time.perf_counter()
-        a = client.system_one(state=text, questions=q).choices["d"]
+        r = client.system_one(state=text, questions=q)
         lat.append((time.perf_counter() - t0) * 1000)
+        a = r.choices["d"]
         preds.append(a.choice)
         confs.append(a.confidence)
         probs.append(dict(a.probabilities))
-    return preds, lat, confs, probs
+        out_tok.append(r.usage.output_tokens or 0)
+        models.append(r.model)                             # 실제로 답한 모델
+    return preds, lat, confs, probs, out_tok, models
 
 
 def llm_run(texts, oa, model):
     oa.chat.completions.create(                            # 워밍업
         model=model, messages=[{"role": "user", "content": PROMPT + "테스트"}])
-    preds, lat, fmt_err, out_tok, reason_tok = [], [], 0, [], []
+    preds, lat, fmt_err, out_tok, reason_tok, models = [], [], 0, [], [], []
     for text in texts:
         t0 = time.perf_counter()
         r = oa.chat.completions.create(
             model=model, messages=[{"role": "user", "content": PROMPT + text}])
         lat.append((time.perf_counter() - t0) * 1000)
+        models.append(r.model)                             # 실제로 답한 모델
         out_tok.append(r.usage.completion_tokens)
         d = getattr(r.usage, "completion_tokens_details", None)
         d = (d if isinstance(d, dict) else d.model_dump()) if d else {}
@@ -104,7 +109,7 @@ def llm_run(texts, oa, model):
             fmt_err += 1                                   # 형식을 안 지킨 건
             m = re.search(VALID, txt)
             preds.append(m.group(0) if m else "other")
-    return preds, lat, fmt_err, out_tok, reason_tok
+    return preds, lat, fmt_err, out_tok, reason_tok, models
 
 
 def hybrid(jev_preds, jev_confs, llm_preds, threshold):
@@ -146,6 +151,7 @@ def row(name, preds, truths, lat, fmt_err=0, out_tok=None, reason_tok=None):
          "p95": pct(lat, 95), "p99": pct(lat, 99), "fmt_err": fmt_err}
     if out_tok:
         d["out_tok"] = statistics.mean(out_tok)
+    if reason_tok:
         d["reason_tok"] = statistics.mean(reason_tok)
     return d
 
@@ -157,12 +163,13 @@ def bench(dataset, label, oa, client, threshold=None):
 
     rp, rl = rule_run(texts)
     out["rows"].append(row("규칙 엔진", rp, truths, rl))
-    jp, jl, jc, jprob = jev_run(texts, client)
-    out["rows"].append(row("Jev 단독", jp, truths, jl))
-    sp, sl, se, so, sr = llm_run(texts, oa, SMALL)
+    jp, jl, jc, jprob, jo, jm = jev_run(texts, client)
+    out["rows"].append(row("Jev 단독", jp, truths, jl, out_tok=jo))
+    sp, sl, se, so, sr, sm = llm_run(texts, oa, SMALL)
     out["rows"].append(row(f"하위 티어 LLM ({SMALL})", sp, truths, sl, se, so, sr))
-    fp, fl, fe, fo, fr = llm_run(texts, oa, FRONTIER)
+    fp, fl, fe, fo, fr, fm = llm_run(texts, oa, FRONTIER)
     out["rows"].append(row(f"프런티어 LLM ({FRONTIER})", fp, truths, fl, fe, fo, fr))
+    out["models"] = sorted(set(jm + sm + fm))              # 응답에 찍힌 모델 이름
 
     if threshold is None:
         threshold = pick_threshold(jp, jc, truths)
@@ -176,7 +183,10 @@ def bench(dataset, label, oa, client, threshold=None):
                gate_reliability=sum(gate) / len(gate) if gate else None,
                llm_call_pct=1 - len(gate) / len(texts),
                jev_brier=brier(jprob, truths),
-               jev_ece=ece(jc, [p == t for p, t in zip(jp, truths)]))
+               jev_ece=ece(jc, [p == t for p, t in zip(jp, truths)]),
+               items=[{"truth": t, "rule": r, "jev": j, "conf": c, "small": s,
+                       "frontier": f, "hybrid": h}      # 건별 예측 — 어느 문항에서 갈렸는지 본다
+                      for t, r, j, c, s, f, h in zip(truths, rp, jp, jc, sp, fp, hp)])
     return out
 
 
@@ -187,7 +197,8 @@ def show(r):
     print(f"{'방식':28}{'정확도':>7}{'평균':>8}{'P50':>8}{'P95':>8}{'P99':>8}"
           f"{'출력tok':>8}{'추론tok':>8}{'형식오류':>6}")
     for x in r["rows"]:
-        ot = f"{x['out_tok']:8.1f}{x['reason_tok']:8.1f}" if "out_tok" in x else " " * 16
+        ot = (f"{x['out_tok']:8.1f}" if "out_tok" in x else " " * 8) + \
+             (f"{x['reason_tok']:8.1f}" if "reason_tok" in x else " " * 8)
         print(f"{x['name']:28}{x['acc']:7.3f}{x['mean']:8.0f}{x['p50']:8.0f}"
               f"{x['p95']:8.0f}{x['p99']:8.0f}{ot}{x['fmt_err']:6d}")
 
