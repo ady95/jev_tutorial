@@ -51,7 +51,7 @@ python ch09/benchmark.py
 | `ch07/` | 7부 | RAG 재랭킹, Agent 위험 평가 |
 | `ch09/` | 9부 | 4파전 벤치마크 |
 | `ch11/` | 11부 | 기권 신호, 신뢰도 통계, 표본 점검, criteria 개선 |
-| `ch13/` | 13부 | 세무 상담 에이전트(LangGraph), 검색 개선, 답변 게이트 |
+| `ch13/` | 13부 | 세무 상담 에이전트(LangChain), 프롬프트 대 판단 모델 비교 |
 | `projects/` | 8부 | 완성 프로젝트 4종 |
 
 ## 장별 대응표
@@ -79,11 +79,10 @@ python ch09/benchmark.py
 | 11-3 | `ch11/02_reliability_stats.py` |
 | 11-4 | `ch11/03_audit_sampling.py` |
 | 11-5 | `ch11/04_improve_criteria.py` |
-| 13-1 | `ch13/agent_tax.py`, `ch13/run_eval.py` |
-| 13-2 | `ch13/diagnose.py` |
-| 13-3 | `ch13/retrievers.py` |
-| 13-4 | `ch13/run_eval.py --char --gate` |
-| 13-5 | `ch13/run_eval.py --char --gate --policy` |
+| 13-1 | `ch13/agent_tax.py`, `ch13/judge_tax.py`, `ch13/evaluate.py` |
+| 13-2 | `ch13/evaluate.py` (모델을 바꿔가며) |
+| 13-3 | `ch13/harness_eval.py` |
+| 13-4 | `ch13/verify_cost2.py`, `ch13/verify_holdout.py`, `ch13/eval_d.py` |
 | 08-1 | `projects/p1_triage/` |
 | 08-2 | `projects/p2_router/` |
 | 08-3 | `projects/p3_rag/` |

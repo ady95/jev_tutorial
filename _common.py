@@ -11,7 +11,7 @@ load_dotenv()
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-LLM = os.getenv("OPENAI_MODEL", "gpt-5-mini")
+LLM = os.getenv("OPENAI_MODEL", "gpt-6-luna")
 LLM_SMALL = os.getenv("OPENAI_MODEL_SMALL", LLM)
 LLM_FRONTIER = os.getenv("OPENAI_MODEL_FRONTIER", LLM)
 

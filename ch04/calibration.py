@@ -34,7 +34,9 @@ def ece(rows, n_bins=BINS):
     total, buckets = 0.0, []
     for i in range(n_bins):
         lo, hi = i / n_bins, (i + 1) / n_bins
-        b = [r for r in rows if lo < r["conf"] <= hi]
+        # 첫 구간만 왼쪽을 닫는다. 안 그러면 conf 가 정확히 0 인 건이 어느 구간에도 안 든다
+        b = [r for r in rows
+             if (lo < r["conf"] <= hi) or (i == 0 and r["conf"] == 0.0)]
         if not b:
             buckets.append({"lo": lo, "hi": hi, "n": 0, "conf": None, "acc": None})
             continue
