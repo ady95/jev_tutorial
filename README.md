@@ -80,6 +80,7 @@ python ch09/benchmark.py
 | 11-3 | `ch11/02_reliability_stats.py` |
 | 11-4 | `ch11/03_audit_sampling.py` |
 | 11-5 | `ch11/04_improve_criteria.py` |
+| 12-6 | `ch12/laya_compare.py` (로컬 laya-serve 필요) |
 | 13-1 | `ch13/agent_tax.py`, `ch13/judge_tax.py`, `ch13/evaluate.py` |
 | 13-2 | `ch13/evaluate.py` (모델을 바꿔가며) |
 | 13-3 | `ch13/harness_eval.py` |
