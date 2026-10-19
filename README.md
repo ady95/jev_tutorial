@@ -66,6 +66,7 @@ python ch09/benchmark.py
 | 03-2 | `ch03/noul.py` |
 | 03-3 | `ch03/score.py` |
 | 03-4 | `ch03/parallel.py` |
+| 03-5 | `ch03/box_shapes.py` (실험 기능, `typesafe-sdk[pil]==0.7.5` 필요) |
 | 04-2 | `ch04/calibration.py`, `ch04/charts.py` |
 | 05-1 | `ch05/smart_if.py` |
 | 05-2 | `ch05/routing.py` |
