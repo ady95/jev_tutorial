@@ -66,7 +66,7 @@ python ch09/benchmark.py
 | 03-2 | `ch03/noul.py` |
 | 03-3 | `ch03/score.py` |
 | 03-4 | `ch03/parallel.py` |
-| 03-5 | `ch03/box_shapes.py` (실험 기능, `typesafe-sdk[pil]==0.7.5` 필요) |
+| 03-5 | `ch03/box_shapes.py` (실험 기능, `typesafe-sdk[pil]==0.7.5` 필요), 원자료 `ch03/results/book/box_2026-10-19.json` |
 | 04-2 | `ch04/calibration.py`, `ch04/charts.py` |
 | 05-1 | `ch05/smart_if.py` |
 | 05-2 | `ch05/routing.py` |
@@ -82,7 +82,7 @@ python ch09/benchmark.py
 | 11-4 | `ch11/03_audit_sampling.py` |
 | 11-5 | `ch11/04_improve_criteria.py` |
 | 12-6 | `ch12/laya_compare.py` (로컬 laya-serve 필요) |
-| 12-7 | `ch12/version_compare.py`, 원자료 `ch12/results/book/v114_2026-10-19.json` |
+| 12-7 | `ch12/version_compare.py`(측정), `ch12/version_analyze.py`(표 재계산, API 없음), 원자료 `ch12/results/book/v114_2026-10-19.json` |
 | 13-1 | `ch13/agent_tax.py`, `ch13/judge_tax.py`, `ch13/evaluate.py` |
 | 13-2 | `ch13/evaluate.py` (모델을 바꿔가며) |
 | 13-3 | `ch13/harness_eval.py` |
