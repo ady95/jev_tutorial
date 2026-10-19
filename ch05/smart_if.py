@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """05-1 실습: 규칙 엔진 vs 판단 — 환불 요구 판정.
 
-규칙에 예외를 추가해도 정확도가 개선되지 않는 현상을 확인합니다.
+규칙에 예외를 붙이면 오탐이 줄고 놓침이 느는 현상을 확인합니다.
+평가셋과 규칙은 책 부록 D의 dataset_refund.py, refund_eval.py 와 같습니다.
 """
 import sys
 import time
@@ -12,32 +13,9 @@ from _common import require_jev, warmup_jev
 require_jev()
 from typesafe_sdk import Noul, TypeSafeClient
 
-# (문장, 실제로 환불을 요구하는가)
-CASES = [
-    ("전액 환불해주세요", True),
-    ("결제 취소 부탁드립니다", True),
-    ("환불 처리 언제 되나요? 신청한 지 2주 됐습니다", True),
-    ("잘못 결제했어요. 취소해주세요", True),
-    ("구독 해지하고 남은 금액 돌려주세요", True),
-    ("이번 건은 무를게요. 돈 돌려받고 싶습니다", True),
-    ("당장 해지하고 전액 환불 안 해주면 신고하겠습니다", True),
-    ("중복 결제된 건 돌려주시면 됩니다", True),
-    ("환불은 안 해주셔도 되고요, 그냥 원인만 알려주세요", False),
-    ("환불 정책이 어떻게 되는지 궁금합니다", False),
-    ("환불 안 받을 테니 기능만 고쳐주세요", False),
-    ("예전에 환불받은 적 있는데 그때 참 친절하셨어요", False),
-    ("환불 규정 페이지 링크가 깨져 있습니다", False),
-    ("돈 다시 넣어주세요", True),
-    ("결제한 거 무효로 해주실 수 있나요", True),
-    ("청구된 금액 취소 부탁합니다", True),
-    ("로그인이 안 됩니다", False),
-    ("견적서 보내주세요", False),
-    ("서비스 잘 쓰고 있습니다", False),
-    ("비밀번호를 바꾸고 싶습니다", False),
-]
+from dataset.refund import REFUND_CASES as CASES     # 책 05-1 표의 20건
 
-KEYWORDS = ["환불", "취소", "돌려", "반환"]
-NEGATIONS = ["안 해", "안해", "필요 없", "괜찮"]
+NEGATIONS = ["안 해", "안해", "필요 없", "괜찮", "안 받"]
 
 # 이 문구가 책 5부 표의 실측본이다. 조금만 바꿔도 20건 중 한 건의 판정이 뒤집힌다
 REFUND = Noul(
@@ -47,13 +25,11 @@ REFUND = Noul(
 
 
 def rule_simple(text):
-    return any(k in text for k in KEYWORDS)
+    return "환불" in text
 
 
 def rule_with_negation(text):
-    if not any(k in text for k in KEYWORDS):
-        return False
-    return not any(n in text for n in NEGATIONS)
+    return "환불" in text and not any(n in text for n in NEGATIONS)
 
 
 def evaluate(name, predict):
@@ -84,7 +60,7 @@ def evaluate(name, predict):
 def main():
     evaluate("규칙: 키워드만", rule_simple)
     evaluate("규칙: 키워드 + 부정어 예외", rule_with_negation)
-    print("\n  ↑ 예외를 추가해도 정확도가 같습니다. 오탐이 놓침으로 옮겨갔을 뿐입니다.")
+    print("\n  ↑ 정확도는 한 건 올랐지만, 오탐을 둘 줄이는 대신 놓침이 하나 늘었습니다.")
 
     with TypeSafeClient() as client:
         warmup_jev(client, REFUND)
