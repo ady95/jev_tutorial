@@ -1,0 +1,542 @@
+[
+ {
+  "kind": "present",
+  "seed": 1,
+  "box": {
+   "left": 0.12,
+   "top": 0.42,
+   "right": 0.25,
+   "bottom": 0.68
+  },
+  "conf": 0.38,
+  "has": 0.98,
+  "iou": 0.0,
+  "iou_en": 0.0,
+  "conf_en": 0.25,
+  "ms": 181.66560000099707,
+  "model": "jev-1.14.0",
+  "in_tok": 1186
+ },
+ {
+  "kind": "present",
+  "seed": 2,
+  "box": {
+   "left": 0.51,
+   "top": 0.3,
+   "right": 0.63,
+   "bottom": 0.47
+  },
+  "conf": 0.39,
+  "has": 0.98,
+  "iou": 0.8149544134874953,
+  "iou_en": 0.21877797672336616,
+  "conf_en": 0.24,
+  "ms": 167.53700000117533,
+  "model": "jev-1.14.0",
+  "in_tok": 1184
+ },
+ {
+  "kind": "present",
+  "seed": 3,
+  "box": {
+   "left": 0.48,
+   "top": 0.08,
+   "right": 0.7,
+   "bottom": 0.38
+  },
+  "conf": 0.93,
+  "has": 0.98,
+  "iou": 0.955905406757614,
+  "iou_en": 0.955905406757614,
+  "conf_en": 0.92,
+  "ms": 170.58239999460056,
+  "model": "jev-1.14.0",
+  "in_tok": 1183
+ },
+ {
+  "kind": "present",
+  "seed": 4,
+  "box": {
+   "left": 0.15,
+   "top": 0.07,
+   "right": 0.29,
+   "bottom": 0.26
+  },
+  "conf": 0.95,
+  "has": 0.99,
+  "iou": 0.7637501958020051,
+  "iou_en": 0.80618076223545,
+  "conf_en": 0.93,
+  "ms": 189.87050000578165,
+  "model": "jev-1.14.0",
+  "in_tok": 1187
+ },
+ {
+  "kind": "present",
+  "seed": 5,
+  "box": {
+   "left": 0.04,
+   "top": 0.51,
+   "right": 0.24,
+   "bottom": 0.79
+  },
+  "conf": 0.94,
+  "has": 0.98,
+  "iou": 0.9149393326592515,
+  "iou_en": 0.8718554560902544,
+  "conf_en": 0.91,
+  "ms": 172.6900000066962,
+  "model": "jev-1.14.0",
+  "in_tok": 1182
+ },
+ {
+  "kind": "present",
+  "seed": 6,
+  "box": {
+   "left": 0.4,
+   "top": 0.42,
+   "right": 0.61,
+   "bottom": 0.7
+  },
+  "conf": 0.55,
+  "has": 0.98,
+  "iou": 0.9148762371535497,
+  "iou_en": 0.9439341563786007,
+  "conf_en": 0.59,
+  "ms": 252.46699999843258,
+  "model": "jev-1.14.0",
+  "in_tok": 1185
+ },
+ {
+  "kind": "present",
+  "seed": 7,
+  "box": {
+   "left": 0.47,
+   "top": 0.07,
+   "right": 0.69,
+   "bottom": 0.35
+  },
+  "conf": 0.82,
+  "has": 0.98,
+  "iou": 0.8658008658008659,
+  "iou_en": 0.9754601226993866,
+  "conf_en": 0.67,
+  "ms": 170.2787999965949,
+  "model": "jev-1.14.0",
+  "in_tok": 1185
+ },
+ {
+  "kind": "present",
+  "seed": 8,
+  "box": {
+   "left": 0.15,
+   "top": 0.17,
+   "right": 0.26,
+   "bottom": 0.31
+  },
+  "conf": 0.96,
+  "has": 0.98,
+  "iou": 0.8523479383149113,
+  "iou_en": 0.7236121256391526,
+  "conf_en": 0.95,
+  "ms": 182.8728999971645,
+  "model": "jev-1.14.0",
+  "in_tok": 1187
+ },
+ {
+  "kind": "present",
+  "seed": 9,
+  "box": {
+   "left": 0.57,
+   "top": 0.54,
+   "right": 0.73,
+   "bottom": 0.69
+  },
+  "conf": 0.67,
+  "has": 0.98,
+  "iou": 0.38882138517618525,
+  "iou_en": 0.5071315372424733,
+  "conf_en": 0.62,
+  "ms": 168.51279999536928,
+  "model": "jev-1.14.0",
+  "in_tok": 1186
+ },
+ {
+  "kind": "present",
+  "seed": 10,
+  "box": {
+   "left": 0.66,
+   "top": 0.54,
+   "right": 0.86,
+   "bottom": 0.79
+  },
+  "conf": 0.44,
+  "has": 0.98,
+  "iou": 0.9101014545266326,
+  "iou_en": 0.8753049235824172,
+  "conf_en": 0.4,
+  "ms": 175.77780000283383,
+  "model": "jev-1.14.0",
+  "in_tok": 1185
+ },
+ {
+  "kind": "present",
+  "seed": 11,
+  "box": {
+   "left": 0.35,
+   "top": 0.67,
+   "right": 0.59,
+   "bottom": 0.96
+  },
+  "conf": 0.73,
+  "has": 0.98,
+  "iou": 0.7267468989021572,
+  "iou_en": 0.7852803917376907,
+  "conf_en": 0.83,
+  "ms": 189.75840001075994,
+  "model": "jev-1.14.0",
+  "in_tok": 1185
+ },
+ {
+  "kind": "present",
+  "seed": 12,
+  "box": {
+   "left": 0.03,
+   "top": 0.41,
+   "right": 0.21,
+   "bottom": 0.66
+  },
+  "conf": 0.96,
+  "has": 0.98,
+  "iou": 0.8437500000000002,
+  "iou_en": 0.7593749999999999,
+  "conf_en": 0.94,
+  "ms": 207.32459999271668,
+  "model": "jev-1.14.0",
+  "in_tok": 1185
+ },
+ {
+  "kind": "present",
+  "seed": 13,
+  "box": {
+   "left": 0.26,
+   "top": 0.26,
+   "right": 0.39,
+   "bottom": 0.45
+  },
+  "conf": 0.91,
+  "has": 0.98,
+  "iou": 0.9011895888906322,
+  "iou_en": 0.8979587059319252,
+  "conf_en": 0.87,
+  "ms": 189.86389999918174,
+  "model": "jev-1.14.0",
+  "in_tok": 1188
+ },
+ {
+  "kind": "present",
+  "seed": 14,
+  "box": {
+   "left": 0.73,
+   "top": 0.33,
+   "right": 0.82,
+   "bottom": 0.48
+  },
+  "conf": 0.5,
+  "has": 0.98,
+  "iou": 0.6731276341589845,
+  "iou_en": 0.5726256376858792,
+  "conf_en": 0.36,
+  "ms": 347.2304000024451,
+  "model": "jev-1.14.0",
+  "in_tok": 1183
+ },
+ {
+  "kind": "present",
+  "seed": 15,
+  "box": {
+   "left": 0.23,
+   "top": 0.76,
+   "right": 0.4,
+   "bottom": 0.95
+  },
+  "conf": 0.52,
+  "has": 0.98,
+  "iou": 0.8163215944272447,
+  "iou_en": 0.8163215944272447,
+  "conf_en": 0.53,
+  "ms": 172.40100000344682,
+  "model": "jev-1.14.0",
+  "in_tok": 1187
+ },
+ {
+  "kind": "present",
+  "seed": 16,
+  "box": {
+   "left": 0.02,
+   "top": 0.45,
+   "right": 0.21,
+   "bottom": 0.71
+  },
+  "conf": 0.94,
+  "has": 0.98,
+  "iou": 0.8903759705762158,
+  "iou_en": 0.8161272321428573,
+  "conf_en": 0.92,
+  "ms": 180.85030000656843,
+  "model": "jev-1.14.0",
+  "in_tok": 1185
+ },
+ {
+  "kind": "present",
+  "seed": 17,
+  "box": {
+   "left": 0.11,
+   "top": 0.03,
+   "right": 0.31,
+   "bottom": 0.33
+  },
+  "conf": 0.93,
+  "has": 0.98,
+  "iou": 0.8459862312890797,
+  "iou_en": 0.889489685960591,
+  "conf_en": 0.89,
+  "ms": 189.86940001195762,
+  "model": "jev-1.14.0",
+  "in_tok": 1187
+ },
+ {
+  "kind": "present",
+  "seed": 18,
+  "box": {
+   "left": 0.78,
+   "top": 0.68,
+   "right": 0.91,
+   "bottom": 0.86
+  },
+  "conf": 0.39,
+  "has": 0.99,
+  "iou": 0.6812722793527558,
+  "iou_en": 0.8111569498594619,
+  "conf_en": 0.21,
+  "ms": 172.76810000475962,
+  "model": "jev-1.14.0",
+  "in_tok": 1184
+ },
+ {
+  "kind": "present",
+  "seed": 19,
+  "box": {
+   "left": 0.09,
+   "top": 0.57,
+   "right": 0.24,
+   "bottom": 0.83
+  },
+  "conf": 0.58,
+  "has": 0.98,
+  "iou": 0.0,
+  "iou_en": 0.0,
+  "conf_en": 0.41,
+  "ms": 170.05129999597557,
+  "model": "jev-1.14.0",
+  "in_tok": 1186
+ },
+ {
+  "kind": "present",
+  "seed": 20,
+  "box": {
+   "left": 0.33,
+   "top": 0.1,
+   "right": 0.56,
+   "bottom": 0.4
+  },
+  "conf": 0.86,
+  "has": 0.98,
+  "iou": 0.8345127566425118,
+  "iou_en": 0.8345127566425118,
+  "conf_en": 0.82,
+  "ms": 170.39460000523832,
+  "model": "jev-1.14.0",
+  "in_tok": 1186
+ },
+ {
+  "kind": "absent",
+  "seed": 101,
+  "box": {
+   "left": 0.06,
+   "top": 0.45,
+   "right": 0.26,
+   "bottom": 0.95
+  },
+  "conf": 0.16,
+  "has": 0.03,
+  "iou": null,
+  "iou_en": null,
+  "conf_en": 0.12,
+  "ms": 167.99649999302346,
+  "model": "jev-1.14.0",
+  "in_tok": 1183
+ },
+ {
+  "kind": "absent",
+  "seed": 102,
+  "box": {
+   "left": 0.58,
+   "top": 0.02,
+   "right": 0.69,
+   "bottom": 0.53
+  },
+  "conf": 0.16,
+  "has": 0.02,
+  "iou": null,
+  "iou_en": null,
+  "conf_en": 0.13,
+  "ms": 171.91870001261123,
+  "model": "jev-1.14.0",
+  "in_tok": 1184
+ },
+ {
+  "kind": "absent",
+  "seed": 103,
+  "box": {
+   "left": 0.4,
+   "top": 0.46,
+   "right": 0.55,
+   "bottom": 0.55
+  },
+  "conf": 0.09,
+  "has": 0.03,
+  "iou": null,
+  "iou_en": null,
+  "conf_en": 0.07,
+  "ms": 178.89920000743587,
+  "model": "jev-1.14.0",
+  "in_tok": 1184
+ },
+ {
+  "kind": "absent",
+  "seed": 104,
+  "box": {
+   "left": 0.19,
+   "top": 0.03,
+   "right": 0.4,
+   "bottom": 0.46
+  },
+  "conf": 0.1,
+  "has": 0.03,
+  "iou": null,
+  "iou_en": null,
+  "conf_en": 0.16,
+  "ms": 184.79220000153873,
+  "model": "jev-1.14.0",
+  "in_tok": 1183
+ },
+ {
+  "kind": "absent",
+  "seed": 105,
+  "box": {
+   "left": 0.19,
+   "top": 0.02,
+   "right": 0.38,
+   "bottom": 0.44
+  },
+  "conf": 0.21,
+  "has": 0.03,
+  "iou": null,
+  "iou_en": null,
+  "conf_en": 0.13,
+  "ms": 172.09880000154953,
+  "model": "jev-1.14.0",
+  "in_tok": 1184
+ },
+ {
+  "kind": "absent",
+  "seed": 106,
+  "box": {
+   "left": 0.11,
+   "top": 0.44,
+   "right": 0.24,
+   "bottom": 0.45
+  },
+  "conf": 0.19,
+  "has": 0.03,
+  "iou": null,
+  "iou_en": null,
+  "conf_en": 0.19,
+  "ms": 173.84259999380447,
+  "model": "jev-1.14.0",
+  "in_tok": 1187
+ },
+ {
+  "kind": "absent",
+  "seed": 107,
+  "box": {
+   "left": 0.26,
+   "top": 0.02,
+   "right": 0.45,
+   "bottom": 0.45
+  },
+  "conf": 0.18,
+  "has": 0.03,
+  "iou": null,
+  "iou_en": null,
+  "conf_en": 0.11,
+  "ms": 316.81449999450706,
+  "model": "jev-1.14.0",
+  "in_tok": 1183
+ },
+ {
+  "kind": "absent",
+  "seed": 108,
+  "box": {
+   "left": 0.13,
+   "top": 0.44,
+   "right": 0.27,
+   "bottom": 0.91
+  },
+  "conf": 0.18,
+  "has": 0.03,
+  "iou": null,
+  "iou_en": null,
+  "conf_en": 0.15,
+  "ms": 170.93500000191852,
+  "model": "jev-1.14.0",
+  "in_tok": 1180
+ },
+ {
+  "kind": "absent",
+  "seed": 109,
+  "box": {
+   "left": 0.1,
+   "top": 0.03,
+   "right": 0.26,
+   "bottom": 0.45
+  },
+  "conf": 0.13,
+  "has": 0.03,
+  "iou": null,
+  "iou_en": null,
+  "conf_en": 0.16,
+  "ms": 186.19290000060573,
+  "model": "jev-1.14.0",
+  "in_tok": 1186
+ },
+ {
+  "kind": "absent",
+  "seed": 110,
+  "box": {
+   "left": 0.34,
+   "top": 0.02,
+   "right": 0.54,
+   "bottom": 0.54
+  },
+  "conf": 0.08,
+  "has": 0.03,
+  "iou": null,
+  "iou_en": null,
+  "conf_en": 0.14,
+  "ms": 168.82120000082068,
+  "model": "jev-1.14.0",
+  "in_tok": 1184
+ }
+]

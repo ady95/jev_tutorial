@@ -10,3 +10,6 @@ out/
 # 실행 결과 (책의 원자료 ch13/results/book/ 은 추적한다)
 ch13/results/*.json
 benchmark_result.json
+
+# 별도 가상환경 (3-5 의 SDK 0.7.5 등)
+.venv-*/
