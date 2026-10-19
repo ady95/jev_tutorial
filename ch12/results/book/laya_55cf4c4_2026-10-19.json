@@ -1,0 +1,2194 @@
+{
+ "date": "2026-10-19",
+ "server": {
+  "laya": "0.3.20",
+  "repo": "convaiinnovations/laya",
+  "revision": "55cf4c4ebb4ebe31b2550e8bdf3bd21b99753851"
+ },
+ "instructions": "어느 부서가 처리해야 하는가?",
+ "dev_threshold": null,
+ "dept": [
+  {
+   "split": "dev",
+   "idx": 0,
+   "text_id": "1eff61e30c",
+   "truth": "billing",
+   "pred": "billing",
+   "ok": true,
+   "conf": 0.9772,
+   "probs": {
+    "billing": 0.9958,
+    "technical": 0.0014,
+    "sales": 0.0011,
+    "other": 0.0017
+   },
+   "ms": 111.6357999999309,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 1,
+   "text_id": "a1c8702873",
+   "truth": "billing",
+   "pred": "other",
+   "ok": false,
+   "conf": 0.4379,
+   "probs": {
+    "billing": 0.1412,
+    "technical": 0.0563,
+    "sales": 0.0419,
+    "other": 0.7607
+   },
+   "ms": 120.68350000481587,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 2,
+   "text_id": "8ef4f51b96",
+   "truth": "billing",
+   "pred": "other",
+   "ok": false,
+   "conf": 0.0396,
+   "probs": {
+    "billing": 0.306,
+    "technical": 0.1277,
+    "sales": 0.2347,
+    "other": 0.3317
+   },
+   "ms": 114.64820000401232,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 3,
+   "text_id": "8faa5d2677",
+   "truth": "billing",
+   "pred": "billing",
+   "ok": true,
+   "conf": 0.4711,
+   "probs": {
+    "billing": 0.7759,
+    "technical": 0.1404,
+    "sales": 0.0276,
+    "other": 0.0561
+   },
+   "ms": 105.43830000096932,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 4,
+   "text_id": "81c088f21d",
+   "truth": "billing",
+   "pred": "other",
+   "ok": false,
+   "conf": 0.2181,
+   "probs": {
+    "billing": 0.3991,
+    "technical": 0.0901,
+    "sales": 0.0472,
+    "other": 0.4636
+   },
+   "ms": 117.03090000082739,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 5,
+   "text_id": "31337e17c6",
+   "truth": "billing",
+   "pred": "technical",
+   "ok": false,
+   "conf": 0.4273,
+   "probs": {
+    "billing": 0.36,
+    "technical": 0.6068,
+    "sales": 0.003,
+    "other": 0.0302
+   },
+   "ms": 102.9908000055002,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 6,
+   "text_id": "deb1b99a1a",
+   "truth": "billing",
+   "pred": "billing",
+   "ok": true,
+   "conf": 0.74,
+   "probs": {
+    "billing": 0.9217,
+    "technical": 0.0253,
+    "sales": 0.0267,
+    "other": 0.0263
+   },
+   "ms": 112.24079999374226,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 7,
+   "text_id": "52d0f9a1e3",
+   "truth": "billing",
+   "pred": "billing",
+   "ok": true,
+   "conf": 0.2897,
+   "probs": {
+    "billing": 0.4835,
+    "technical": 0.4249,
+    "sales": 0.0223,
+    "other": 0.0693
+   },
+   "ms": 113.78499999409541,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 8,
+   "text_id": "ac95931b48",
+   "truth": "billing",
+   "pred": "billing",
+   "ok": true,
+   "conf": 0.7647,
+   "probs": {
+    "billing": 0.9259,
+    "technical": 0.0427,
+    "sales": 0.0038,
+    "other": 0.0276
+   },
+   "ms": 108.42699999921024,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 9,
+   "text_id": "d884cf963e",
+   "truth": "billing",
+   "pred": "other",
+   "ok": false,
+   "conf": 0.1813,
+   "probs": {
+    "billing": 0.2948,
+    "technical": 0.0211,
+    "sales": 0.2256,
+    "other": 0.4585
+   },
+   "ms": 107.56270001002122,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 10,
+   "text_id": "593741484a",
+   "truth": "billing",
+   "pred": "other",
+   "ok": false,
+   "conf": 0.0961,
+   "probs": {
+    "billing": 0.2497,
+    "technical": 0.2608,
+    "sales": 0.0731,
+    "other": 0.4164
+   },
+   "ms": 126.66730000637472,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 11,
+   "text_id": "ccf443774d",
+   "truth": "billing",
+   "pred": "billing",
+   "ok": true,
+   "conf": 0.6201,
+   "probs": {
+    "billing": 0.8431,
+    "technical": 0.0273,
+    "sales": 0.0046,
+    "other": 0.125
+   },
+   "ms": 127.77579999237787,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 12,
+   "text_id": "0d11ff47b2",
+   "truth": "technical",
+   "pred": "technical",
+   "ok": true,
+   "conf": 0.9312,
+   "probs": {
+    "billing": 0.0015,
+    "technical": 0.9838,
+    "sales": 0.0033,
+    "other": 0.0114
+   },
+   "ms": 121.7676000087522,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 13,
+   "text_id": "7ac15eb311",
+   "truth": "technical",
+   "pred": "technical",
+   "ok": true,
+   "conf": 0.6862,
+   "probs": {
+    "billing": 0.0136,
+    "technical": 0.8872,
+    "sales": 0.0145,
+    "other": 0.0847
+   },
+   "ms": 119.7445999860065,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 14,
+   "text_id": "90e9a60e50",
+   "truth": "technical",
+   "pred": "technical",
+   "ok": true,
+   "conf": 0.7588,
+   "probs": {
+    "billing": 0.001,
+    "technical": 0.9011,
+    "sales": 0.0011,
+    "other": 0.0968
+   },
+   "ms": 119.47540000255685,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 15,
+   "text_id": "2996caa75d",
+   "truth": "technical",
+   "pred": "technical",
+   "ok": true,
+   "conf": 0.9588,
+   "probs": {
+    "billing": 0.0006,
+    "technical": 0.9908,
+    "sales": 0.0007,
+    "other": 0.0079
+   },
+   "ms": 102.13610000209883,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 16,
+   "text_id": "f8c9c6a9b2",
+   "truth": "technical",
+   "pred": "technical",
+   "ok": true,
+   "conf": 0.9858,
+   "probs": {
+    "billing": 0.0003,
+    "technical": 0.9974,
+    "sales": 0.0003,
+    "other": 0.002
+   },
+   "ms": 108.51320000074338,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 17,
+   "text_id": "ab162923af",
+   "truth": "technical",
+   "pred": "technical",
+   "ok": true,
+   "conf": 0.9467,
+   "probs": {
+    "billing": 0.0008,
+    "technical": 0.9874,
+    "sales": 0.0009,
+    "other": 0.0108
+   },
+   "ms": 94.95060000335798,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 18,
+   "text_id": "4eb42bc505",
+   "truth": "technical",
+   "pred": "technical",
+   "ok": true,
+   "conf": 0.8345,
+   "probs": {
+    "billing": 0.0049,
+    "technical": 0.9524,
+    "sales": 0.0094,
+    "other": 0.0333
+   },
+   "ms": 106.36730000260286,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 19,
+   "text_id": "b527968b7a",
+   "truth": "technical",
+   "pred": "technical",
+   "ok": true,
+   "conf": 0.4883,
+   "probs": {
+    "billing": 0.0033,
+    "technical": 0.6256,
+    "sales": 0.0056,
+    "other": 0.3655
+   },
+   "ms": 113.4161999943899,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 20,
+   "text_id": "69523dafec",
+   "truth": "technical",
+   "pred": "technical",
+   "ok": true,
+   "conf": 0.9603,
+   "probs": {
+    "billing": 0.0006,
+    "technical": 0.9918,
+    "sales": 0.0043,
+    "other": 0.0033
+   },
+   "ms": 116.52560000948142,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 21,
+   "text_id": "c73e7aee96",
+   "truth": "technical",
+   "pred": "technical",
+   "ok": true,
+   "conf": 0.9887,
+   "probs": {
+    "billing": 0.0001,
+    "technical": 0.9979,
+    "sales": 0.0001,
+    "other": 0.0018
+   },
+   "ms": 106.84899998886976,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 22,
+   "text_id": "468c42fd23",
+   "truth": "technical",
+   "pred": "technical",
+   "ok": true,
+   "conf": 0.4033,
+   "probs": {
+    "billing": 0.0209,
+    "technical": 0.6207,
+    "sales": 0.022,
+    "other": 0.3364
+   },
+   "ms": 111.32529999304097,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 23,
+   "text_id": "ab0a69b453",
+   "truth": "technical",
+   "pred": "technical",
+   "ok": true,
+   "conf": 0.9757,
+   "probs": {
+    "billing": 0.0002,
+    "technical": 0.995,
+    "sales": 0.0005,
+    "other": 0.0042
+   },
+   "ms": 108.74129999137949,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 24,
+   "text_id": "e6c65d28a5",
+   "truth": "sales",
+   "pred": "billing",
+   "ok": false,
+   "conf": 0.3367,
+   "probs": {
+    "billing": 0.7025,
+    "technical": 0.0743,
+    "sales": 0.0766,
+    "other": 0.1466
+   },
+   "ms": 144.00030000251718,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 25,
+   "text_id": "ac8a5f0281",
+   "truth": "sales",
+   "pred": "other",
+   "ok": false,
+   "conf": 0.3785,
+   "probs": {
+    "billing": 0.1299,
+    "technical": 0.041,
+    "sales": 0.1025,
+    "other": 0.7266
+   },
+   "ms": 132.55090000166092,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 26,
+   "text_id": "155640076f",
+   "truth": "sales",
+   "pred": "billing",
+   "ok": false,
+   "conf": 0.6035,
+   "probs": {
+    "billing": 0.8474,
+    "technical": 0.0048,
+    "sales": 0.0834,
+    "other": 0.0643
+   },
+   "ms": 112.38059999595862,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 27,
+   "text_id": "cf34c86458",
+   "truth": "sales",
+   "pred": "technical",
+   "ok": false,
+   "conf": 0.7714,
+   "probs": {
+    "billing": 0.0016,
+    "technical": 0.9275,
+    "sales": 0.0361,
+    "other": 0.0348
+   },
+   "ms": 158.5139000089839,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 28,
+   "text_id": "17a532e942",
+   "truth": "sales",
+   "pred": "other",
+   "ok": false,
+   "conf": 0.1459,
+   "probs": {
+    "billing": 0.1202,
+    "technical": 0.0853,
+    "sales": 0.323,
+    "other": 0.4716
+   },
+   "ms": 117.94569999619853,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 29,
+   "text_id": "5a8cff82f3",
+   "truth": "sales",
+   "pred": "billing",
+   "ok": false,
+   "conf": 0.6464,
+   "probs": {
+    "billing": 0.8726,
+    "technical": 0.0062,
+    "sales": 0.0619,
+    "other": 0.0593
+   },
+   "ms": 112.29930000263266,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 30,
+   "text_id": "543700badc",
+   "truth": "sales",
+   "pred": "billing",
+   "ok": false,
+   "conf": 0.0583,
+   "probs": {
+    "billing": 0.4256,
+    "technical": 0.1598,
+    "sales": 0.1804,
+    "other": 0.2342
+   },
+   "ms": 108.90229999495205,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 31,
+   "text_id": "117659fc71",
+   "truth": "sales",
+   "pred": "technical",
+   "ok": false,
+   "conf": 0.1353,
+   "probs": {
+    "billing": 0.0392,
+    "technical": 0.387,
+    "sales": 0.2285,
+    "other": 0.3453
+   },
+   "ms": 106.55969999788795,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 32,
+   "text_id": "05b6a9e7c1",
+   "truth": "sales",
+   "pred": "sales",
+   "ok": true,
+   "conf": 0.3447,
+   "probs": {
+    "billing": 0.0936,
+    "technical": 0.0884,
+    "sales": 0.7159,
+    "other": 0.1021
+   },
+   "ms": 102.55750000942498,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 33,
+   "text_id": "c493edf8c4",
+   "truth": "sales",
+   "pred": "other",
+   "ok": false,
+   "conf": 0.4177,
+   "probs": {
+    "billing": 0.0132,
+    "technical": 0.3618,
+    "sales": 0.02,
+    "other": 0.605
+   },
+   "ms": 106.8785000097705,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 34,
+   "text_id": "74bc94080a",
+   "truth": "other",
+   "pred": "technical",
+   "ok": false,
+   "conf": 0.1157,
+   "probs": {
+    "billing": 0.0623,
+    "technical": 0.4409,
+    "sales": 0.2517,
+    "other": 0.2451
+   },
+   "ms": 121.91650000750087,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 35,
+   "text_id": "f81153c6bf",
+   "truth": "other",
+   "pred": "other",
+   "ok": true,
+   "conf": 0.394,
+   "probs": {
+    "billing": 0.0665,
+    "technical": 0.0415,
+    "sales": 0.164,
+    "other": 0.7279
+   },
+   "ms": 107.3030999978073,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 36,
+   "text_id": "a33b5c60a5",
+   "truth": "other",
+   "pred": "sales",
+   "ok": false,
+   "conf": 0.5995,
+   "probs": {
+    "billing": 0.0052,
+    "technical": 0.0137,
+    "sales": 0.8124,
+    "other": 0.1686
+   },
+   "ms": 109.9372000026051,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 37,
+   "text_id": "634f2a17e3",
+   "truth": "other",
+   "pred": "other",
+   "ok": true,
+   "conf": 0.1725,
+   "probs": {
+    "billing": 0.0861,
+    "technical": 0.3349,
+    "sales": 0.0919,
+    "other": 0.4871
+   },
+   "ms": 103.72909999568947,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 38,
+   "text_id": "3057d815aa",
+   "truth": "other",
+   "pred": "sales",
+   "ok": false,
+   "conf": 0.4079,
+   "probs": {
+    "billing": 0.0327,
+    "technical": 0.0405,
+    "sales": 0.7062,
+    "other": 0.2206
+   },
+   "ms": 111.21620000631083,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 39,
+   "text_id": "7d2d140583",
+   "truth": "other",
+   "pred": "technical",
+   "ok": false,
+   "conf": 0.2938,
+   "probs": {
+    "billing": 0.003,
+    "technical": 0.4609,
+    "sales": 0.1087,
+    "other": 0.4274
+   },
+   "ms": 108.22180000832304,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 40,
+   "text_id": "e1616853c3",
+   "truth": "other",
+   "pred": "technical",
+   "ok": false,
+   "conf": 0.8451,
+   "probs": {
+    "billing": 0.0024,
+    "technical": 0.9524,
+    "sales": 0.0041,
+    "other": 0.0411
+   },
+   "ms": 107.45899999164976,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 41,
+   "text_id": "f08b87c301",
+   "truth": "other",
+   "pred": "technical",
+   "ok": false,
+   "conf": 0.9209,
+   "probs": {
+    "billing": 0.0011,
+    "technical": 0.979,
+    "sales": 0.0008,
+    "other": 0.0191
+   },
+   "ms": 100.11719999602064,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 42,
+   "text_id": "2ac0e8c710",
+   "truth": "other",
+   "pred": "billing",
+   "ok": false,
+   "conf": 0.3684,
+   "probs": {
+    "billing": 0.728,
+    "technical": 0.0945,
+    "sales": 0.0616,
+    "other": 0.1159
+   },
+   "ms": 115.30140000104439,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 43,
+   "text_id": "aa2570ea5a",
+   "truth": "other",
+   "pred": "sales",
+   "ok": false,
+   "conf": 0.2319,
+   "probs": {
+    "billing": 0.3207,
+    "technical": 0.0685,
+    "sales": 0.5418,
+    "other": 0.0689
+   },
+   "ms": 122.69849999574944,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 44,
+   "text_id": "37cbed74eb",
+   "truth": "billing",
+   "pred": "technical",
+   "ok": false,
+   "conf": 0.6036,
+   "probs": {
+    "billing": 0.0805,
+    "technical": 0.8528,
+    "sales": 0.0113,
+    "other": 0.0554
+   },
+   "ms": 135.50829999439884,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 45,
+   "text_id": "902179c88b",
+   "truth": "sales",
+   "pred": "billing",
+   "ok": false,
+   "conf": 1.0,
+   "probs": {
+    "billing": 1.0,
+    "technical": 0.0,
+    "sales": 0.0,
+    "other": 0.0
+   },
+   "ms": 120.24689999816474,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 46,
+   "text_id": "016372971d",
+   "truth": "other",
+   "pred": "technical",
+   "ok": false,
+   "conf": 0.1998,
+   "probs": {
+    "billing": 0.047,
+    "technical": 0.5543,
+    "sales": 0.1697,
+    "other": 0.229
+   },
+   "ms": 120.97039999207482,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 47,
+   "text_id": "43d481cda1",
+   "truth": "technical",
+   "pred": "technical",
+   "ok": true,
+   "conf": 0.5373,
+   "probs": {
+    "billing": 0.1997,
+    "technical": 0.7701,
+    "sales": 0.0046,
+    "other": 0.0256
+   },
+   "ms": 113.70919999899343,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 48,
+   "text_id": "043a6905a7",
+   "truth": "billing",
+   "pred": "billing",
+   "ok": true,
+   "conf": 0.9987,
+   "probs": {
+    "billing": 0.9998,
+    "technical": 0.0001,
+    "sales": 0.0,
+    "other": 0.0001
+   },
+   "ms": 136.5700000023935,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 49,
+   "text_id": "106430c653",
+   "truth": "sales",
+   "pred": "technical",
+   "ok": false,
+   "conf": 0.5028,
+   "probs": {
+    "billing": 0.0912,
+    "technical": 0.8068,
+    "sales": 0.0682,
+    "other": 0.0338
+   },
+   "ms": 115.79540000820998,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 50,
+   "text_id": "865ba5cd87",
+   "truth": "other",
+   "pred": "technical",
+   "ok": false,
+   "conf": 0.4963,
+   "probs": {
+    "billing": 0.0076,
+    "technical": 0.6938,
+    "sales": 0.0109,
+    "other": 0.2877
+   },
+   "ms": 122.14039999525994,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 51,
+   "text_id": "edd95930ee",
+   "truth": "billing",
+   "pred": "technical",
+   "ok": false,
+   "conf": 0.2245,
+   "probs": {
+    "billing": 0.0611,
+    "technical": 0.6006,
+    "sales": 0.1915,
+    "other": 0.1468
+   },
+   "ms": 123.78899999021087,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 52,
+   "text_id": "4b72695d17",
+   "truth": "technical",
+   "pred": "technical",
+   "ok": true,
+   "conf": 0.7831,
+   "probs": {
+    "billing": 0.0049,
+    "technical": 0.9301,
+    "sales": 0.011,
+    "other": 0.0539
+   },
+   "ms": 117.79560000286438,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 53,
+   "text_id": "e082878aeb",
+   "truth": "technical",
+   "pred": "billing",
+   "ok": false,
+   "conf": 0.2245,
+   "probs": {
+    "billing": 0.6188,
+    "technical": 0.1141,
+    "sales": 0.1023,
+    "other": 0.1647
+   },
+   "ms": 120.74500000744592,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 54,
+   "text_id": "9608480ec1",
+   "truth": "billing",
+   "pred": "billing",
+   "ok": true,
+   "conf": 0.8037,
+   "probs": {
+    "billing": 0.9417,
+    "technical": 0.0152,
+    "sales": 0.0054,
+    "other": 0.0376
+   },
+   "ms": 105.84509999898728,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 55,
+   "text_id": "7ac0023f94",
+   "truth": "technical",
+   "pred": "technical",
+   "ok": true,
+   "conf": 0.3768,
+   "probs": {
+    "billing": 0.0105,
+    "technical": 0.6521,
+    "sales": 0.0688,
+    "other": 0.2686
+   },
+   "ms": 130.04639999417122,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 56,
+   "text_id": "114584ca6f",
+   "truth": "other",
+   "pred": "other",
+   "ok": true,
+   "conf": 0.1481,
+   "probs": {
+    "billing": 0.0872,
+    "technical": 0.244,
+    "sales": 0.1492,
+    "other": 0.5196
+   },
+   "ms": 120.40809998870827,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 57,
+   "text_id": "731107999e",
+   "truth": "sales",
+   "pred": "sales",
+   "ok": true,
+   "conf": 0.6922,
+   "probs": {
+    "billing": 0.0223,
+    "technical": 0.0401,
+    "sales": 0.9016,
+    "other": 0.036
+   },
+   "ms": 122.86289999610744,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 58,
+   "text_id": "32bf4f42cb",
+   "truth": "billing",
+   "pred": "technical",
+   "ok": false,
+   "conf": 0.4169,
+   "probs": {
+    "billing": 0.0555,
+    "technical": 0.7185,
+    "sales": 0.0229,
+    "other": 0.203
+   },
+   "ms": 120.8496000035666,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "dev",
+   "idx": 59,
+   "text_id": "048942c988",
+   "truth": "sales",
+   "pred": "technical",
+   "ok": false,
+   "conf": 0.9143,
+   "probs": {
+    "billing": 0.0011,
+    "technical": 0.9772,
+    "sales": 0.0016,
+    "other": 0.02
+   },
+   "ms": 127.19650000508409,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 0,
+   "text_id": "dd52be4024",
+   "truth": "billing",
+   "pred": "billing",
+   "ok": true,
+   "conf": 0.9953,
+   "probs": {
+    "billing": 0.9993,
+    "technical": 0.0002,
+    "sales": 0.0002,
+    "other": 0.0003
+   },
+   "ms": 116.10800000198651,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 1,
+   "text_id": "576f1cad2c",
+   "truth": "billing",
+   "pred": "billing",
+   "ok": true,
+   "conf": 0.979,
+   "probs": {
+    "billing": 0.9961,
+    "technical": 0.0007,
+    "sales": 0.0005,
+    "other": 0.0027
+   },
+   "ms": 105.07690001395531,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 2,
+   "text_id": "c231c89b89",
+   "truth": "billing",
+   "pred": "sales",
+   "ok": false,
+   "conf": 0.2172,
+   "probs": {
+    "billing": 0.079,
+    "technical": 0.1056,
+    "sales": 0.5899,
+    "other": 0.2255
+   },
+   "ms": 106.43850000633392,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 3,
+   "text_id": "3161759027",
+   "truth": "billing",
+   "pred": "other",
+   "ok": false,
+   "conf": 0.3402,
+   "probs": {
+    "billing": 0.0726,
+    "technical": 0.0176,
+    "sales": 0.2868,
+    "other": 0.6229
+   },
+   "ms": 111.79389999597333,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 4,
+   "text_id": "4356dc5b89",
+   "truth": "billing",
+   "pred": "billing",
+   "ok": true,
+   "conf": 0.9915,
+   "probs": {
+    "billing": 0.9986,
+    "technical": 0.0004,
+    "sales": 0.0002,
+    "other": 0.0008
+   },
+   "ms": 112.57430000114255,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 5,
+   "text_id": "ceaf78c9cd",
+   "truth": "billing",
+   "pred": "other",
+   "ok": false,
+   "conf": 0.2088,
+   "probs": {
+    "billing": 0.3887,
+    "technical": 0.0509,
+    "sales": 0.094,
+    "other": 0.4665
+   },
+   "ms": 104.52249999798369,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 6,
+   "text_id": "792afa5dea",
+   "truth": "billing",
+   "pred": "billing",
+   "ok": true,
+   "conf": 1.0,
+   "probs": {
+    "billing": 1.0,
+    "technical": 0.0,
+    "sales": 0.0,
+    "other": 0.0
+   },
+   "ms": 115.724199989927,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 7,
+   "text_id": "062fa323bf",
+   "truth": "billing",
+   "pred": "other",
+   "ok": false,
+   "conf": 0.2819,
+   "probs": {
+    "billing": 0.0882,
+    "technical": 0.3347,
+    "sales": 0.0233,
+    "other": 0.5537
+   },
+   "ms": 105.83950000000186,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 8,
+   "text_id": "3ee70827f4",
+   "truth": "billing",
+   "pred": "billing",
+   "ok": true,
+   "conf": 0.9922,
+   "probs": {
+    "billing": 0.9987,
+    "technical": 0.0002,
+    "sales": 0.0001,
+    "other": 0.001
+   },
+   "ms": 111.50739999720827,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 9,
+   "text_id": "668a7d2d84",
+   "truth": "billing",
+   "pred": "billing",
+   "ok": true,
+   "conf": 0.19,
+   "probs": {
+    "billing": 0.5865,
+    "technical": 0.1205,
+    "sales": 0.1803,
+    "other": 0.1128
+   },
+   "ms": 121.81599999894388,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 10,
+   "text_id": "57c61e49ea",
+   "truth": "billing",
+   "pred": "technical",
+   "ok": false,
+   "conf": 0.6425,
+   "probs": {
+    "billing": 0.0248,
+    "technical": 0.8692,
+    "sales": 0.0155,
+    "other": 0.0905
+   },
+   "ms": 121.99790000158828,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 11,
+   "text_id": "39cc82a854",
+   "truth": "billing",
+   "pred": "billing",
+   "ok": true,
+   "conf": 0.545,
+   "probs": {
+    "billing": 0.7986,
+    "technical": 0.1525,
+    "sales": 0.0053,
+    "other": 0.0435
+   },
+   "ms": 101.69530000712257,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 12,
+   "text_id": "d25c69b284",
+   "truth": "technical",
+   "pred": "technical",
+   "ok": true,
+   "conf": 0.9757,
+   "probs": {
+    "billing": 0.0004,
+    "technical": 0.9951,
+    "sales": 0.0004,
+    "other": 0.0041
+   },
+   "ms": 113.64250000042375,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 13,
+   "text_id": "6abb8b4531",
+   "truth": "technical",
+   "pred": "technical",
+   "ok": true,
+   "conf": 0.4038,
+   "probs": {
+    "billing": 0.0113,
+    "technical": 0.5911,
+    "sales": 0.0268,
+    "other": 0.3707
+   },
+   "ms": 109.83760000090115,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 14,
+   "text_id": "04c4c68168",
+   "truth": "technical",
+   "pred": "technical",
+   "ok": true,
+   "conf": 0.9584,
+   "probs": {
+    "billing": 0.0006,
+    "technical": 0.9909,
+    "sales": 0.0012,
+    "other": 0.0073
+   },
+   "ms": 122.56620000698604,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 15,
+   "text_id": "c93011b81d",
+   "truth": "technical",
+   "pred": "technical",
+   "ok": true,
+   "conf": 0.7253,
+   "probs": {
+    "billing": 0.0104,
+    "technical": 0.905,
+    "sales": 0.0117,
+    "other": 0.0728
+   },
+   "ms": 111.70179999317043,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 16,
+   "text_id": "35d9473017",
+   "truth": "technical",
+   "pred": "technical",
+   "ok": true,
+   "conf": 0.9415,
+   "probs": {
+    "billing": 0.0011,
+    "technical": 0.986,
+    "sales": 0.0011,
+    "other": 0.0118
+   },
+   "ms": 108.66019999957643,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 17,
+   "text_id": "61bbf720c0",
+   "truth": "technical",
+   "pred": "technical",
+   "ok": true,
+   "conf": 0.5859,
+   "probs": {
+    "billing": 0.0129,
+    "technical": 0.8117,
+    "sales": 0.0118,
+    "other": 0.1636
+   },
+   "ms": 108.0933999910485,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 18,
+   "text_id": "1d5d615a8c",
+   "truth": "technical",
+   "pred": "other",
+   "ok": false,
+   "conf": 0.4503,
+   "probs": {
+    "billing": 0.0149,
+    "technical": 0.2646,
+    "sales": 0.0258,
+    "other": 0.6947
+   },
+   "ms": 111.70720000518486,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 19,
+   "text_id": "978149fd8a",
+   "truth": "technical",
+   "pred": "technical",
+   "ok": true,
+   "conf": 0.5252,
+   "probs": {
+    "billing": 0.0078,
+    "technical": 0.7402,
+    "sales": 0.0127,
+    "other": 0.2393
+   },
+   "ms": 111.35940000531264,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 20,
+   "text_id": "a18a09371e",
+   "truth": "technical",
+   "pred": "technical",
+   "ok": true,
+   "conf": 0.49,
+   "probs": {
+    "billing": 0.012,
+    "technical": 0.7128,
+    "sales": 0.0147,
+    "other": 0.2604
+   },
+   "ms": 107.83839999930933,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 21,
+   "text_id": "bb56a248bf",
+   "truth": "technical",
+   "pred": "technical",
+   "ok": true,
+   "conf": 0.4629,
+   "probs": {
+    "billing": 0.0111,
+    "technical": 0.6448,
+    "sales": 0.0098,
+    "other": 0.3343
+   },
+   "ms": 109.9260999908438,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 22,
+   "text_id": "345ca16972",
+   "truth": "technical",
+   "pred": "technical",
+   "ok": true,
+   "conf": 0.5126,
+   "probs": {
+    "billing": 0.0509,
+    "technical": 0.7892,
+    "sales": 0.1473,
+    "other": 0.0126
+   },
+   "ms": 114.48999999265652,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 23,
+   "text_id": "7a82031397",
+   "truth": "technical",
+   "pred": "technical",
+   "ok": true,
+   "conf": 0.9013,
+   "probs": {
+    "billing": 0.0023,
+    "technical": 0.9756,
+    "sales": 0.0079,
+    "other": 0.0143
+   },
+   "ms": 116.40829998941626,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 24,
+   "text_id": "e9f80ba900",
+   "truth": "sales",
+   "pred": "billing",
+   "ok": false,
+   "conf": 0.9997,
+   "probs": {
+    "billing": 1.0,
+    "technical": 0.0,
+    "sales": 0.0,
+    "other": 0.0
+   },
+   "ms": 140.5088000028627,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 25,
+   "text_id": "9ae30cfeb9",
+   "truth": "sales",
+   "pred": "billing",
+   "ok": false,
+   "conf": 0.7582,
+   "probs": {
+    "billing": 0.9259,
+    "technical": 0.0099,
+    "sales": 0.0232,
+    "other": 0.041
+   },
+   "ms": 113.25580000993796,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 26,
+   "text_id": "1340caa572",
+   "truth": "sales",
+   "pred": "other",
+   "ok": false,
+   "conf": 0.2687,
+   "probs": {
+    "billing": 0.0238,
+    "technical": 0.3532,
+    "sales": 0.093,
+    "other": 0.5301
+   },
+   "ms": 108.69890000321902,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 27,
+   "text_id": "cf4c16fff9",
+   "truth": "sales",
+   "pred": "technical",
+   "ok": false,
+   "conf": 0.68,
+   "probs": {
+    "billing": 0.005,
+    "technical": 0.8776,
+    "sales": 0.0185,
+    "other": 0.0989
+   },
+   "ms": 111.84890000731684,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 28,
+   "text_id": "6c88bd6977",
+   "truth": "sales",
+   "pred": "technical",
+   "ok": false,
+   "conf": 0.4299,
+   "probs": {
+    "billing": 0.0197,
+    "technical": 0.7303,
+    "sales": 0.0592,
+    "other": 0.1908
+   },
+   "ms": 120.94680000154767,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 29,
+   "text_id": "aafb48534c",
+   "truth": "sales",
+   "pred": "technical",
+   "ok": false,
+   "conf": 0.3783,
+   "probs": {
+    "billing": 0.0332,
+    "technical": 0.6867,
+    "sales": 0.2281,
+    "other": 0.0519
+   },
+   "ms": 112.60059999767691,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 30,
+   "text_id": "0fbeeae614",
+   "truth": "sales",
+   "pred": "other",
+   "ok": false,
+   "conf": 0.4507,
+   "probs": {
+    "billing": 0.006,
+    "technical": 0.4513,
+    "sales": 0.0076,
+    "other": 0.5351
+   },
+   "ms": 111.82479999843054,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 31,
+   "text_id": "390fbe9db6",
+   "truth": "sales",
+   "pred": "sales",
+   "ok": true,
+   "conf": 0.2786,
+   "probs": {
+    "billing": 0.0334,
+    "technical": 0.0989,
+    "sales": 0.6019,
+    "other": 0.2658
+   },
+   "ms": 136.64329999301117,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 32,
+   "text_id": "a12bb71aca",
+   "truth": "sales",
+   "pred": "sales",
+   "ok": true,
+   "conf": 0.2055,
+   "probs": {
+    "billing": 0.1487,
+    "technical": 0.1062,
+    "sales": 0.6046,
+    "other": 0.1405
+   },
+   "ms": 108.90260001178831,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 33,
+   "text_id": "e151ad0d04",
+   "truth": "sales",
+   "pred": "billing",
+   "ok": false,
+   "conf": 0.1944,
+   "probs": {
+    "billing": 0.5597,
+    "technical": 0.0537,
+    "sales": 0.1832,
+    "other": 0.2034
+   },
+   "ms": 119.23400001251139,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 34,
+   "text_id": "1391548104",
+   "truth": "other",
+   "pred": "sales",
+   "ok": false,
+   "conf": 0.6736,
+   "probs": {
+    "billing": 0.0366,
+    "technical": 0.0212,
+    "sales": 0.8929,
+    "other": 0.0493
+   },
+   "ms": 116.95460000191815,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 35,
+   "text_id": "8b127a51ae",
+   "truth": "other",
+   "pred": "sales",
+   "ok": false,
+   "conf": 0.2997,
+   "probs": {
+    "billing": 0.0101,
+    "technical": 0.0837,
+    "sales": 0.4708,
+    "other": 0.4354
+   },
+   "ms": 119.14809999871068,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 36,
+   "text_id": "07d24a03e8",
+   "truth": "other",
+   "pred": "technical",
+   "ok": false,
+   "conf": 0.361,
+   "probs": {
+    "billing": 0.0105,
+    "technical": 0.6811,
+    "sales": 0.1483,
+    "other": 0.1601
+   },
+   "ms": 100.7514000084484,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 37,
+   "text_id": "0e0bd24fa3",
+   "truth": "other",
+   "pred": "technical",
+   "ok": false,
+   "conf": 0.3033,
+   "probs": {
+    "billing": 0.0578,
+    "technical": 0.5507,
+    "sales": 0.0298,
+    "other": 0.3617
+   },
+   "ms": 108.96860000502784,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 38,
+   "text_id": "a459bf674a",
+   "truth": "other",
+   "pred": "technical",
+   "ok": false,
+   "conf": 0.9565,
+   "probs": {
+    "billing": 0.0002,
+    "technical": 0.9898,
+    "sales": 0.0006,
+    "other": 0.0094
+   },
+   "ms": 115.74299998756032,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 39,
+   "text_id": "6d0890b4c5",
+   "truth": "other",
+   "pred": "other",
+   "ok": true,
+   "conf": 0.4523,
+   "probs": {
+    "billing": 0.0036,
+    "technical": 0.3556,
+    "sales": 0.0191,
+    "other": 0.6216
+   },
+   "ms": 112.61979999835603,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 40,
+   "text_id": "41cac5ff42",
+   "truth": "other",
+   "pred": "technical",
+   "ok": false,
+   "conf": 0.4665,
+   "probs": {
+    "billing": 0.0178,
+    "technical": 0.7562,
+    "sales": 0.0509,
+    "other": 0.1752
+   },
+   "ms": 114.00639999192208,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 41,
+   "text_id": "8b6413d11c",
+   "truth": "other",
+   "pred": "other",
+   "ok": true,
+   "conf": 0.344,
+   "probs": {
+    "billing": 0.0231,
+    "technical": 0.0407,
+    "sales": 0.3753,
+    "other": 0.5609
+   },
+   "ms": 119.02739999641199,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 42,
+   "text_id": "e39200fa1e",
+   "truth": "other",
+   "pred": "billing",
+   "ok": false,
+   "conf": 0.8802,
+   "probs": {
+    "billing": 0.9702,
+    "technical": 0.0124,
+    "sales": 0.0101,
+    "other": 0.0073
+   },
+   "ms": 116.01439998776186,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 43,
+   "text_id": "26ddf555f5",
+   "truth": "other",
+   "pred": "technical",
+   "ok": false,
+   "conf": 0.3199,
+   "probs": {
+    "billing": 0.135,
+    "technical": 0.6867,
+    "sales": 0.1273,
+    "other": 0.0511
+   },
+   "ms": 111.56429999391548,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 44,
+   "text_id": "09d695e1de",
+   "truth": "billing",
+   "pred": "billing",
+   "ok": true,
+   "conf": 1.0,
+   "probs": {
+    "billing": 1.0,
+    "technical": 0.0,
+    "sales": 0.0,
+    "other": 0.0
+   },
+   "ms": 116.06039998878259,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 45,
+   "text_id": "c93fa4385e",
+   "truth": "sales",
+   "pred": "billing",
+   "ok": false,
+   "conf": 0.5163,
+   "probs": {
+    "billing": 0.8122,
+    "technical": 0.0451,
+    "sales": 0.0393,
+    "other": 0.1035
+   },
+   "ms": 120.6957000104012,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 46,
+   "text_id": "519cb34488",
+   "truth": "other",
+   "pred": "technical",
+   "ok": false,
+   "conf": 0.2387,
+   "probs": {
+    "billing": 0.0331,
+    "technical": 0.5847,
+    "sales": 0.218,
+    "other": 0.1641
+   },
+   "ms": 118.94220000249334,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 47,
+   "text_id": "8db16ebb2a",
+   "truth": "technical",
+   "pred": "billing",
+   "ok": false,
+   "conf": 0.3268,
+   "probs": {
+    "billing": 0.4916,
+    "technical": 0.0624,
+    "sales": 0.0109,
+    "other": 0.4351
+   },
+   "ms": 115.0851000129478,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 48,
+   "text_id": "cf804331b0",
+   "truth": "sales",
+   "pred": "billing",
+   "ok": false,
+   "conf": 0.5399,
+   "probs": {
+    "billing": 0.803,
+    "technical": 0.1446,
+    "sales": 0.0115,
+    "other": 0.0409
+   },
+   "ms": 111.56059999484569,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 49,
+   "text_id": "3d05a9ce3c",
+   "truth": "technical",
+   "pred": "technical",
+   "ok": true,
+   "conf": 0.1648,
+   "probs": {
+    "billing": 0.3254,
+    "technical": 0.4782,
+    "sales": 0.0591,
+    "other": 0.1373
+   },
+   "ms": 108.48049999913201,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 50,
+   "text_id": "7c99a6e31b",
+   "truth": "billing",
+   "pred": "other",
+   "ok": false,
+   "conf": 0.3832,
+   "probs": {
+    "billing": 0.0225,
+    "technical": 0.1536,
+    "sales": 0.1091,
+    "other": 0.7147
+   },
+   "ms": 106.75199999241158,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 51,
+   "text_id": "346c93eb1d",
+   "truth": "billing",
+   "pred": "billing",
+   "ok": true,
+   "conf": 0.5795,
+   "probs": {
+    "billing": 0.7483,
+    "technical": 0.2485,
+    "sales": 0.0006,
+    "other": 0.0026
+   },
+   "ms": 113.07929999020416,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 52,
+   "text_id": "c5963f8e87",
+   "truth": "technical",
+   "pred": "technical",
+   "ok": true,
+   "conf": 0.8927,
+   "probs": {
+    "billing": 0.0051,
+    "technical": 0.9732,
+    "sales": 0.0054,
+    "other": 0.0163
+   },
+   "ms": 108.84290000831243,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 53,
+   "text_id": "fa5636dc39",
+   "truth": "technical",
+   "pred": "billing",
+   "ok": false,
+   "conf": 0.2088,
+   "probs": {
+    "billing": 0.4379,
+    "technical": 0.1482,
+    "sales": 0.0224,
+    "other": 0.3915
+   },
+   "ms": 123.48090000159573,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 54,
+   "text_id": "f913224bbf",
+   "truth": "sales",
+   "pred": "billing",
+   "ok": false,
+   "conf": 0.9832,
+   "probs": {
+    "billing": 0.997,
+    "technical": 0.0004,
+    "sales": 0.0006,
+    "other": 0.002
+   },
+   "ms": 109.7347000031732,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 55,
+   "text_id": "ccec82685e",
+   "truth": "technical",
+   "pred": "technical",
+   "ok": true,
+   "conf": 0.869,
+   "probs": {
+    "billing": 0.0007,
+    "technical": 0.9581,
+    "sales": 0.0009,
+    "other": 0.0403
+   },
+   "ms": 112.95670000254177,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 56,
+   "text_id": "9d79dc63e8",
+   "truth": "other",
+   "pred": "technical",
+   "ok": false,
+   "conf": 0.2863,
+   "probs": {
+    "billing": 0.019,
+    "technical": 0.533,
+    "sales": 0.0859,
+    "other": 0.3621
+   },
+   "ms": 105.89289999916218,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 57,
+   "text_id": "2d922574b5",
+   "truth": "billing",
+   "pred": "technical",
+   "ok": false,
+   "conf": 0.1239,
+   "probs": {
+    "billing": 0.1861,
+    "technical": 0.4215,
+    "sales": 0.0615,
+    "other": 0.3309
+   },
+   "ms": 113.28079999657348,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 58,
+   "text_id": "c39c73fe23",
+   "truth": "technical",
+   "pred": "technical",
+   "ok": true,
+   "conf": 0.7709,
+   "probs": {
+    "billing": 0.0024,
+    "technical": 0.9158,
+    "sales": 0.0046,
+    "other": 0.0772
+   },
+   "ms": 107.37290000542998,
+   "checkpoint": "multilingual"
+  },
+  {
+   "split": "holdout",
+   "idx": 59,
+   "text_id": "5beed66e4c",
+   "truth": "sales",
+   "pred": "technical",
+   "ok": false,
+   "conf": 0.5069,
+   "probs": {
+    "billing": 0.0415,
+    "technical": 0.8121,
+    "sales": 0.0784,
+    "other": 0.068
+   },
+   "ms": 113.2692999963183,
+   "checkpoint": "multilingual"
+  }
+ ],
+ "refund": [
+  {
+   "idx": 0,
+   "text_id": "1a127969e3",
+   "truth": true,
+   "p_book": 0.9976,
+   "p_ab": 0.9736
+  },
+  {
+   "idx": 1,
+   "text_id": "c63446dd1a",
+   "truth": true,
+   "p_book": 0.9957,
+   "p_ab": 0.9476
+  },
+  {
+   "idx": 2,
+   "text_id": "006e80f860",
+   "truth": true,
+   "p_book": 0.9968,
+   "p_ab": 0.6012
+  },
+  {
+   "idx": 3,
+   "text_id": "562d1514c6",
+   "truth": true,
+   "p_book": 0.9983,
+   "p_ab": 0.908
+  },
+  {
+   "idx": 4,
+   "text_id": "b1cf7f0ca4",
+   "truth": true,
+   "p_book": 0.9965,
+   "p_ab": 0.7683
+  },
+  {
+   "idx": 5,
+   "text_id": "4cf39faf1b",
+   "truth": true,
+   "p_book": 0.9869,
+   "p_ab": 0.7893
+  },
+  {
+   "idx": 6,
+   "text_id": "306e6c8339",
+   "truth": true,
+   "p_book": 0.9975,
+   "p_ab": 0.9359
+  },
+  {
+   "idx": 7,
+   "text_id": "f60dab5e3f",
+   "truth": true,
+   "p_book": 0.9877,
+   "p_ab": 0.8551
+  },
+  {
+   "idx": 8,
+   "text_id": "e082878aeb",
+   "truth": false,
+   "p_book": 0.9198,
+   "p_ab": 0.2402
+  },
+  {
+   "idx": 9,
+   "text_id": "5b1b3c1412",
+   "truth": false,
+   "p_book": 0.7997,
+   "p_ab": 0.6007
+  },
+  {
+   "idx": 10,
+   "text_id": "11fc22400d",
+   "truth": false,
+   "p_book": 0.9453,
+   "p_ab": 0.6317
+  },
+  {
+   "idx": 11,
+   "text_id": "92fbc3ee71",
+   "truth": false,
+   "p_book": 0.8975,
+   "p_ab": 0.5895
+  },
+  {
+   "idx": 12,
+   "text_id": "d04678be67",
+   "truth": false,
+   "p_book": 0.99,
+   "p_ab": 0.1323
+  },
+  {
+   "idx": 13,
+   "text_id": "715aca7d35",
+   "truth": true,
+   "p_book": 0.997,
+   "p_ab": 0.8608
+  },
+  {
+   "idx": 14,
+   "text_id": "1d86e5a2f9",
+   "truth": true,
+   "p_book": 0.9889,
+   "p_ab": 0.7458
+  },
+  {
+   "idx": 15,
+   "text_id": "8a81699ddb",
+   "truth": true,
+   "p_book": 0.9967,
+   "p_ab": 0.793
+  },
+  {
+   "idx": 16,
+   "text_id": "79346d63b9",
+   "truth": false,
+   "p_book": 0.994,
+   "p_ab": 0.5619
+  },
+  {
+   "idx": 17,
+   "text_id": "d1dcd134e8",
+   "truth": false,
+   "p_book": 0.9288,
+   "p_ab": 0.485
+  },
+  {
+   "idx": 18,
+   "text_id": "a72683ea79",
+   "truth": false,
+   "p_book": 0.9697,
+   "p_ab": 0.4853
+  },
+  {
+   "idx": 19,
+   "text_id": "63a5807f4c",
+   "truth": false,
+   "p_book": 0.5365,
+   "p_ab": 0.0886
+  }
+ ]
+}

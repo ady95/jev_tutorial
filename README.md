@@ -81,7 +81,7 @@ python ch09/benchmark.py
 | 11-3 | `ch11/02_reliability_stats.py` |
 | 11-4 | `ch11/03_audit_sampling.py` |
 | 11-5 | `ch11/04_improve_criteria.py` |
-| 12-6 | `ch12/laya_compare.py` (로컬 laya-serve 필요) |
+| 12-6 | `ch12/laya_serve_pinned.py`(가중치 리비전을 고정한 로컬 서버), `ch12/laya_compare.py`, 원자료 `ch12/results/book/laya_55cf4c4_2026-10-19.json` |
 | 12-7 | `ch12/version_compare.py`(측정), `ch12/version_analyze.py`(표 재계산, API 없음), 원자료 `ch12/results/book/v114_2026-10-19.json` |
 | 13-1 | `ch13/agent_tax.py`, `ch13/judge_tax.py`, `ch13/evaluate.py` |
 | 13-2 | `ch13/evaluate.py` (모델을 바꿔가며) |
