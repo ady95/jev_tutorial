@@ -13,6 +13,7 @@
 책의 원자료는 ch12/results/book/v114_2026-10-19.json 입니다.
 """
 import argparse
+import hashlib
 import json
 import os
 import statistics
@@ -55,13 +56,17 @@ QSETS = {
 LAT_Q = "쓰던 요금제가 저한테 안 맞는 것 같아요. 어떻게 하죠?"
 
 
+def text_id(text):
+    return hashlib.sha1(text.encode("utf-8")).hexdigest()[:10]
+
+
 def classify(client, model, data, questions):
     rows = []
-    for text, truth, _ in data:
+    for i, (text, truth, _) in enumerate(data):
         t0 = time.perf_counter()
         r = client.system_one(state=text, questions=questions, model=model)
         a = r.choices["d"]
-        rows.append({"truth": truth, "pred": a.choice, "conf": a.confidence,
+        rows.append({"idx": i, "text_id": text_id(text), "truth": truth, "pred": a.choice, "conf": a.confidence,
                      "probs": dict(a.probabilities), "ms": (time.perf_counter() - t0) * 1000,
                      "model": r.model, "in_tok": r.usage.input_tokens})
     return rows

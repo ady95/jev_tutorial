@@ -7,6 +7,7 @@
 9부와의 짝지은 비교·오프라인 하이브리드는 9부 원자료(ch09/results/book/)의 LLM 답을 씁니다.
 LLM 을 다시 부르지 않으므로, 같은 문항에 대한 '고정된 과거 답'과의 비교입니다.
 """
+import hashlib
 import json
 import math
 import os
@@ -21,6 +22,21 @@ GRID = (0.5, 0.7, 0.8, 0.9, 0.95)
 
 d = json.load(open(RAW, encoding="utf-8"))
 old = json.load(open(OLD, encoding="utf-8"))
+
+sys.path.insert(0, ROOT)
+from dataset.holdout import HOLDOUT                      # noqa: E402
+from dataset.inquiries import INQUIRIES as DEV           # noqa: E402
+
+TEXT_IDS = {"dev": [hashlib.sha1(t.encode("utf-8")).hexdigest()[:10] for t, _, _ in DEV],
+            "holdout": [hashlib.sha1(t.encode("utf-8")).hexdigest()[:10] for t, _, _ in HOLDOUT]}
+
+
+def check_items(rows, split):
+    """원자료의 문항이 지금 평가셋과 같은 순서인지 본다. 문항 ID 가 있으면 ID 로, 없으면 정답 순서로."""
+    if rows and "text_id" in rows[0]:
+        return [r["text_id"] for r in rows] == TEXT_IDS[split][:len(rows)], "문항 ID"
+    truths = [y for _, y, _ in (DEV if split == "dev" else HOLDOUT)]
+    return [r["truth"] for r in rows] == truths[:len(rows)], "정답 순서(이 원자료에는 문항 ID 없음)"
 M = d["models"]
 RUNS = sorted({int(k.split("|")[3]) for k in d["dept"]})
 
@@ -68,6 +84,9 @@ def rows(m, var, split, run):
 
 
 print("원자료:", os.path.basename(RAW), "  회차:", RUNS)
+for split in ("dev", "holdout"):
+    ok, how = check_items(d["dept"][f"{M[0]}|plain|{split}|{RUNS[0]}"], split)
+    print(f"  {split} 문항 대조 ({how}): {'일치' if ok else '불일치 — 다른 평가셋으로 잰 원자료입니다'}")
 print("응답 모델:", {m: sorted({r["model"] for k, v in d["dept"].items() if k.startswith(m) for r in v}) for m in M})
 
 for var, title in (("plain", "instructions 없음 (4부·9부 조건)"), ("instr", "instructions 있음 (12-4 조건)")):
@@ -97,6 +116,7 @@ for split in ("dev", "holdout"):
     print(f"  {split:7} {M[1]}만 맞힘 {up}  {M[0]}만 맞힘 {dn}  (부호 검정 p={sign_p(up, dn):.2f})")
 
 print("\n[9부 LLM 답과 짝지은 비교 · 오프라인 하이브리드 (LLM 답은 2026-09-23 원자료)]")
+print("  9부 원자료에는 문항 ID 가 없어 정답 순서로 짝짓습니다. 자기 데이터로 바꿀 때는 문항 ID 로 짝지으십시오.")
 for m in M:
     th = pick(rows(m, "plain", "dev", RUNS[0]))
     for split, olds in (("dev", [old["dev"]]), ("holdout", old["holdout"])):
@@ -106,12 +126,18 @@ for m in M:
                 print("  문항 순서가 9부 원자료와 다릅니다 — 건너뜀")
                 continue
             it = it[:len(jr)]
-            a = sum(r["pred"] == r["truth"] and x["frontier"] != x["truth"] for r, x in zip(jr, it))
-            b = sum(r["pred"] != r["truth"] and x["frontier"] == x["truth"] for r, x in zip(jr, it))
+            pair = {}
+            for other in ("frontier", "small"):
+                a = sum(r["pred"] == r["truth"] and x[other] != x["truth"] for r, x in zip(jr, it))
+                b = sum(r["pred"] != r["truth"] and x[other] == x["truth"] for r, x in zip(jr, it))
+                pair[other] = (sum(x[other] == x["truth"] for x in it) / len(it), a, b)
             hyb = [r["pred"] if (th is not None and r["conf"] >= th) else x["frontier"] for r, x in zip(jr, it)]
             hacc = sum(h == x["truth"] for h, x in zip(hyb, it)) / len(it)
             extra = f"  38번 {jr[38]['pred']}({jr[38]['conf']:.2f})" if split == "holdout" and len(jr) > 38 else ""
-            print(f"  {m} {split} {i}회  Jev {acc(jr):.3f}  Jev만/프런티어만 {a}/{b}  하이브리드 {hacc:.3f}{extra}")
+            print(f"  {m} {split} {i}회  Jev {acc(jr):.3f}  "
+                  f"프런티어 {pair['frontier'][0]:.3f} (Jev만/프런티어만 {pair['frontier'][1]}/{pair['frontier'][2]})  "
+                  f"하위 티어 {pair['small'][0]:.3f} (Jev만/하위만 {pair['small'][1]}/{pair['small'][2]})  "
+                  f"하이브리드 {hacc:.3f}{extra}")
 
 print("\n[5부 환불 판정 (임계값 0.5)]")
 for m in M:
