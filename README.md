@@ -2,7 +2,7 @@
 
 위키독스 책 **「Jev 따라하기 (LLM과 다른 의사결정 AI 시작하기)」** 의 예제 코드입니다.
 
-- 책: https://wikidocs.net/book/21376
+- 책 구매: [YES24](https://www.yes24.com/product/goods/196905189) · [교보문고](https://ebook-product.kyobobook.co.kr/dig/epd/ebook/E000013618851) · [위키독스](https://wikidocs.net/book/21376)
 
 ## 빠른 시작
 
